@@ -53,7 +53,13 @@
 						<div class="logo-element"><img src="<?= base_url()?>assets/img/Universidad_de_Manila_Logo.png" width="32" height="32"></div>
 					</li>
 					<li>
-						<a href="widgets.html"><i class="fa fa-flask"></i> <span class="nav-label">Widgets</span></a>
+						<a href="widgets.html"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
+					</li>
+					<li>
+						<a href="widgets.html"><i class="fa fa-envelope"></i> <span class="nav-label">Enroll</span></a>
+					</li>
+					<li>
+						<a href="widgets.html"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
 					</li>
 				</ul>
 			</div>
