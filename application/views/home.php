@@ -53,13 +53,13 @@
 						<div class="logo-element"><img src="<?= base_url()?>assets/img/Universidad_de_Manila_Logo.png" width="32" height="32"></div>
 					</li>
 					<li>
-						<a href="widgets.html"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
+						<a href="#"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
 					</li>
 					<li>
-						<a href="widgets.html"><i class="fa fa-envelope"></i> <span class="nav-label">Enroll</span></a>
+						<a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Enroll</span></a>
 					</li>
 					<li>
-						<a href="widgets.html"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
+						<a href="#"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
 					</li>
 				</ul>
 			</div>
@@ -81,6 +81,69 @@
 					</ul>
 				</nav>
 			</div>
+
+			<div class="wrapper wrapper-content animated fadeInRight">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title text-center">
+								<h2>Schedule</h2>
+							</div>
+							<div class="ibox-content">
+								<div class="table-responsive">
+									<table class="table table-striped">
+			              <thead>
+			              <tr>
+			                <th class="col-md-1 text-center">Subject Code</th>
+			                <th class="col-md-5">Subject Title</th>
+			                <th class="col-md-3">Instructor</th>
+			                <th class="col-md-2">Days | Time</th>
+			                <th class="col-md-1">Room</th>
+			                <th class="col-md-0 text-center">Units</th>
+			              </tr>
+			              </thead>
+			              <tbody>
+											<tr>
+												<td>ACS 311</td>
+												<td>Data Communication & Basic Network Concepts</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>ACS 312</td>
+												<td>DataBase Management Systems 2</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>ACS 313</td>
+												<td>Multimedia Technology I</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>3</td>
+											</tr>
+											<tr>
+												<td>ACS 314</td>
+												<td>Object Oriented Programming</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>3</td>
+											</tr>
+										</tbody>
+			            </table>
+				        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 	</div>
