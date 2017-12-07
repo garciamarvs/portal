@@ -8,8 +8,16 @@ class Evaluate extends CI_Controller {
 			redirect('login');
 		}
 
+		$status = $this->evaluate_model->getEvalStatus();
+		$data = array();
+			if($status['active'] == '1'){
+				$data['courses'] = $this->evaluate_model->getCourse($status['sem_id'], $this->session->userdata('user_id'));
+			} else {
+				$data['courses'] = NULL;
+			}
+
 		$this->load->view('templates/header');
-		$this->load->view('evaluate/index');
+		$this->load->view('evaluate/index', $data);
 		$this->load->view('templates/footer');
 	}
 
