@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Singapore');
 $fname = $this->session->userdata('fname');
 $mname = $this->session->userdata('mname');
 $lname = $this->session->userdata('lname');
@@ -6,11 +7,16 @@ switch ($this->session->userdata('usertype')) {
 	case '1':
 		$usertype = 'Student';
 		break;
-	
-	default:
-		$usertype = 'not yet assigned';
+	case '2':
+		$usertype = 'Faculty';
 		break;
-}
+	case '5':
+		$usertype = 'Administrator';
+		break;	
+	default:
+		$usertype = 'Not yet assigned';
+		break;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -42,8 +48,31 @@ switch ($this->session->userdata('usertype')) {
 	<link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
+	<link href="<?= base_url() ?>assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
 	<link href="<?= base_url() ?>assets/css/animate.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
+
+	<!-- Mainly scripts -->
+	<script src="<?= base_url() ?>assets/js/jquery-3.1.1.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- iCheck -->
+  <script src="<?= base_url() ?>assets/js/plugins/iCheck/icheck.min.js"></script>
+
+  <!-- Sweet alert -->
+   <script src="<?= base_url() ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+   <script src="<?= base_url() ?>assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="<?= base_url() ?>assets/js/inspinia.js"></script>
+	<script src="<?= base_url() ?>assets/js/plugins/pace/pace.min.js"></script>
+	<script type="text/javascript"> var base_url = '<?= base_url() ?>';</script>
 
 </head>
 <body>
@@ -67,6 +96,9 @@ switch ($this->session->userdata('usertype')) {
 						<div class="logo-element"><img src="<?= base_url()?>assets/img/Universidad_de_Manila_Logo.png" width="32" height="32"></div>
 					</li>
 					<li>
+						<a href="<?= base_url()?>"><i class="fa fa-home"></i><span class="nav-label">Home</span></a>
+					</li>
+					<li>
 						<a href="<?= base_url()?>evaluate"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
 					</li>
 					<li>
@@ -74,6 +106,12 @@ switch ($this->session->userdata('usertype')) {
 					</li>
 					<li>
 						<a href="#"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
+					</li>
+					<li>
+						<a href="<?= base_url()?>evaluate/result"><i class="fa fa-list-alt"></i> <span class="nav-label">Evaluation Results</span></a>
+					</li>
+					<li>
+						<a href="<?= base_url()?>evaluate/schedule"><i class="fa fa-calendar"></i> <span class="nav-label">Evaluation Schedule</span></a>
 					</li>
 				</ul>
 			</div>

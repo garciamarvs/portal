@@ -8671,3 +8671,6 @@ input[type=number]::-webkit-outer-spin-button {
     vertical-align: middle !important;
     float: none !important;
 }
+.nopadding {
+  padding: 0 !important;
+}
