@@ -50,9 +50,10 @@
   </tr>
   </thead>
   <tbody id="theTable">
-
   </tbody>
 </table>
+
+<div class="middle-box text-center animated fadeInDown" id="theError"></div>
 
 <script>
 	$(document).ready(function(){
@@ -81,13 +82,17 @@
 			success: function(data){
 				if(data.status == 'success'){
 					// console.log(data.res);
-					$('#theTable tr').remove();
-					if(data.res.length > 0){
+					$('#theTable').empty();
+					$('#theError').empty();
+					if(data.res.length>0){
 						for(var i=0;i<=data.res.length;i++){
-						var content = '<tr><td class="text-center">'+(i+1)+'</td><td>'+data.res[i].faculty+'</td><td>'+data.res[i].code+'</td><td>'+data.res[i].title+'</td><td>'+data.res[i].rating+'</td><td>'+data.res[i].remarks+'</td><td><a href="'+base_url+'evaluate/report"><i class="fa fa-file"></i></a></td></tr>';
+						var content = '<tr><td class="text-center">'+(i+1)+'</td><td>'+data.res[i].faculty+'</td><td>'+data.res[i].code+'</td><td>'+data.res[i].title+'</td><td>'+data.res[i].rating+'</td><td>'+data.res[i].remarks+'</td><td><a href="'+base_url+'evaluate/report/'+data.res[i].id+'"><i class="fa fa-file"></i></a></td></tr>';
 						$('#theTable').append(content);
 						}
-					}					
+					} else {
+						var content = '<h3 class="font-bold">No Data Found.</h3>';
+						$('#theError').append(content);
+					}
 				}
 			}
 		});

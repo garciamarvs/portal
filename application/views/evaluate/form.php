@@ -1,6 +1,6 @@
 <?php
 	$status = $this->evaluate_model->getEvalStatus();
-	if($status['active'] == '1' && strtotime($status['date']) > time()){
+	if($status['active'] == '1' && strtotime($status['date']) > time() && time() > strtotime($status['start_date'])){
 		$courses = $this->evaluate_model->getCourse($status['sem_id'], $this->session->userdata('user_id'));
 	} else {
 		$courses = NULL;

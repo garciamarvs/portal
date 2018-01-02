@@ -1,6 +1,6 @@
 <?php
 	$status = $this->evaluate_model->getEvalStatus();
-	if($status['active'] == '1' && strtotime($status['date']) > time()){
+	if($status['active'] == '1' && strtotime($status['date']) > time() && time() > strtotime($status['start_date'])){
 		$courses = $this->evaluate_model->getCourse($status['sem_id'], $this->session->userdata('user_id'));
 	} else {
 		$courses = NULL;
@@ -19,7 +19,7 @@
 				}
 			</style>
 
-			<h2 class="text-center bg-primary p-xs b-r-md">Faculty Evaluation</h2>
+			<h2 class="text-center bg-primary p-xs b-r-md">Faculty Evaluation<br><?php $sem = $this->evaluate_model->getSemById($status['sem_id']); echo $sem['name']; ?></h2>
 			<div class="ibox">
 				<div class="ibox-content">
 					<h3 class="text-center">Important Reminder</h3>

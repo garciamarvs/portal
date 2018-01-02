@@ -122,24 +122,52 @@ class Evaluate extends CI_Controller {
 		$this->load->view('templates/footer');
 	}
 
-	public function report()
+	public function report($course_id)
 	{
 		$this->load->helper('pdf_helper');
-    /*
-        ---- ---- ---- ----
-        your code here
-        ---- ---- ---- ----
-    */
-    $this->load->view('pdfreport');
+    $data['c'] = $this->evaluate_model->getCourseById($course_id);
+    $this->load->view('evaluate/report', $data);
 	}
 
 	public function schedule()
 	{
+		$this->form_validation->set_rules('sem_id', 'School Year/Semester', 'required|callback_checkActiveSched');
+		$this->form_validation->set_rules('start_date', 'Start Date', 'required');
+		$this->form_validation->set_rules('end_date', 'End Date', 'required');
+
+		$data['sem'] = $this->evaluate_model->getSem();
+		$data['sched'] = $this->evaluate_model->getEvalSched();
+
+		if($this->form_validation->run() === FALSE){
+
+			$this->load->view('templates/header');
+			$this->load->view('evaluate/schedule', $data);
+			$this->load->view('templates/footer');
+		} else {
+			$name = 'faculty_eval';
+			$sem_id = $this->input->post('sem_id');
+			$active = 1;
+			$start_date = $this->input->post('start_date').' 00:00:00';
+			$end_date		= $this->input->post('end_date').' 24:00:00';
+
+			$this->evaluate_model->addEvalSched($name, $sem_id, $active, $start_date, $end_date);
+
+			$this->session->set_flashdata('checkActiveSched_false', true);
+
+			$this->load->view('templates/header');
+			$this->load->view('evaluate/schedule', $data);
+			$this->load->view('templates/footer');
+		}
+	}
+
+	public function questions()
+	{
 		$this->load->view('templates/header');
-		$this->load->view('evaluate/schedule');
+		$this->load->view('evaluate/question');
 		$this->load->view('templates/footer');
 	}
 
+	//Ajaxs
 	function getEvalResult(){
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
@@ -164,6 +192,58 @@ class Evaluate extends CI_Controller {
 			$faculty = $this->evaluate_model->getFacultyByCollege($college);
 
 			echo json_encode(array('status' => 'success', 'faculty' => $faculty));
+		}
+	}
+
+	function disableEvalSched(){
+		$id = $this->input->post('id');
+
+		if($this->input->post('type') == 'disableEvalSched'){
+			$this->evaluate_model->disableEvalSched($id);
+			
+			echo json_encode(array('status' => 'success'));
+		}
+	}
+
+	function populateModal_Edit(){
+		$id = $this->input->post('id');
+		if($this->input->post('type') == 'modal_edit'){
+			$q = $this->evaluate_model->getQuestionById($id);
+
+			echo json_encode(array('status' => 'success', 'q' => $q));
+		}
+	}
+
+	function saveModal_Edit(){
+		$id = $this->input->post('id');
+		$category = $this->input->post('category');
+		$question = $this->input->post('question');
+
+		if($this->input->post('type') == 'modal_save'){
+			$this->evaluate_model->saveQuestionEdit($id, $category, $question);
+			
+			echo json_encode(array('status' => 'success'));
+		}
+	}
+
+	function chkbox(){
+		$active = $this->input->post('active');
+		$id = $this->input->post('id');
+
+		if($this->input->post('type') == 'chkbox'){			
+			$this->evaluate_model->chkbox($id, $active);
+
+			echo json_encode(array('status' => 'success'));
+		}
+	}
+
+	//Callbacks
+	public function checkActiveSched(){
+		if($this->evaluate_model->getActiveSched()){
+			$this->session->set_flashdata('checkActiveSched', true);
+			return false;
+		} else {
+			return true;
 		}
 	}
 

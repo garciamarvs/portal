@@ -51,7 +51,9 @@ switch ($this->session->userdata('usertype')) {
 	<link href="<?= base_url() ?>assets/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/plugins/iCheck/custom.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/css/plugins/switchery/switchery.css" rel="stylesheet">
 
+	<!-- Custom and plugin css -->
 	<link href="<?= base_url() ?>assets/css/animate.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/style.css" rel="stylesheet">
 
@@ -61,13 +63,10 @@ switch ($this->session->userdata('usertype')) {
 	<script src="<?= base_url() ?>assets/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 	<script src="<?= base_url() ?>assets/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-	<!-- iCheck -->
   <script src="<?= base_url() ?>assets/js/plugins/iCheck/icheck.min.js"></script>
-
-  <!-- Sweet alert -->
-   <script src="<?= base_url() ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
-
-   <script src="<?= base_url() ?>assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <script src="<?= base_url() ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
+  <script src="<?= base_url() ?>assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <script src="<?= base_url() ?>assets/js/plugins/switchery/switchery.js"></script>
 
 	<!-- Custom and plugin javascript -->
 	<script src="<?= base_url() ?>assets/js/inspinia.js"></script>
@@ -98,6 +97,7 @@ switch ($this->session->userdata('usertype')) {
 					<li>
 						<a href="<?= base_url()?>"><i class="fa fa-home"></i><span class="nav-label">Home</span></a>
 					</li>
+					<?php if($this->session->userdata('usertype')==1){ ?>
 					<li>
 						<a href="<?= base_url()?>evaluate"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
 					</li>
@@ -107,12 +107,17 @@ switch ($this->session->userdata('usertype')) {
 					<li>
 						<a href="#"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
 					</li>
+					<?php } ?>
+					<?php if($this->session->userdata('usertype')==5){ ?>					
 					<li>
-						<a href="<?= base_url()?>evaluate/result"><i class="fa fa-list-alt"></i> <span class="nav-label">Evaluation Results</span></a>
-					</li>
-					<li>
-						<a href="<?= base_url()?>evaluate/schedule"><i class="fa fa-calendar"></i> <span class="nav-label">Evaluation Schedule</span></a>
-					</li>
+	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Faculty Evaluation</span><span class="fa arrow"></span></a>
+	          <ul class="nav nav-second-level collapse">
+	          	<li><a href="<?= base_url()?>evaluate/schedule">Schedule</a></li>
+	            <li><a href="<?= base_url()?>evaluate/result">Result</a></li>
+	            <li><a href="<?= base_url()?>evaluate/questions">Questions</a></li>
+	          </ul>
+          </li>
+          <?php } ?>
 				</ul>
 			</div>
 		</nav>
