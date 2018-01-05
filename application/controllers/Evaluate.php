@@ -222,6 +222,7 @@ class Evaluate extends CI_Controller {
 		if($this->input->post('type') == 'modal_save'){
 			$this->evaluate_model->saveQuestionEdit($id, $category, $question);
 			
+			$this->session->set_flashdata('saveModal_Edit', true);
 			echo json_encode(array('status' => 'success'));
 		}
 	}
@@ -233,6 +234,19 @@ class Evaluate extends CI_Controller {
 		if($this->input->post('type') == 'chkbox'){			
 			$this->evaluate_model->chkbox($id, $active);
 
+			echo json_encode(array('status' => 'success'));
+		}
+	}
+
+	function addQuestion(){
+		$category = $this->input->post('category');
+		$question = $this->input->post('question');
+		$status = $this->input->post('status');
+
+		if($this->input->post('type')=='addQuestion'){
+			$this->evaluate_model->addQuestion($category, $question, $status);
+
+			$this->session->set_flashdata('addQuestion', true);
 			echo json_encode(array('status' => 'success'));
 		}
 	}

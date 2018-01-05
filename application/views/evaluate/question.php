@@ -14,6 +14,7 @@ if($this->evaluate_model->getActiveSched()){$disable = true;}
 </style>
 
 <h4 class="bg-primary p-xs b-r-md-t-half" style="border:5px solid #18846e;margin-bottom:3px !important;">Faculty Evaluation Questions</h4>
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal3">Add Question</button>
 <hr style="border-bottom:2px solid #737373; margin: 0;">
 
 <div class="row">
@@ -144,7 +145,6 @@ if($this->evaluate_model->getActiveSched()){$disable = true;}
 		<div class="modal-content animated fadeIn">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
 				<h4 class="modal-title">Edit Question</h4>
 			</div>
 
@@ -176,6 +176,53 @@ if($this->evaluate_model->getActiveSched()){$disable = true;}
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="modal inmodal" id="myModal3" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content animated fadeIn">
+      <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	      <h4 class="modal-title">Add Question</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+					<div class="form-group"><label class="col-sm-2 control-label text-right p-xs">Category*</label>
+						<div class="col-sm-1 no-padding">
+							<select id="aCategory" class="form-control m-b no-padding" style="padding-left:8px !important;">
+								<option value="A">A</option>
+								<option value="B">B</option>
+								<option value="C">C</option>
+								<option value="D">D</option>
+								<option value="E">E</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group"><label class="col-sm-2 control-label text-right p-xs">Question*</label>
+						<div class="col-sm-10 no-padding"><textarea id="aQuestion" class="form-control m-b" maxlength="255"></textarea></div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group"><label class="col-sm-2 control-label text-right p-xs">Status*</label>
+						<div class="col-sm-2 no-padding">
+							<select id="aStatus" class="form-control m-b">
+								<option value="1">Active</option>
+								<option value="0">Inactive</option>
+							</select>
+						</div>						
+					</div>
+				</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        <button id="addBtn" type="button" class="btn btn-primary">Add Now!</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -228,11 +275,57 @@ if($this->evaluate_model->getActiveSched()){$disable = true;}
 			dataType: "json",
 			success: function(data){
 				if(data.status=="success"){
-					alert('success');
+					location.reload();
 				}
 			}
 		});
 	}
+
+	$(document).ready(function(){
+		$('#addBtn').on('click', function(){
+			var cat = $('#aCategory').val();
+			var que = $('#aQuestion').val();
+			var sta = $('#aStatus').val();
+
+			$.ajax({
+				type: "POST",
+				url: base_url+'evaluate/addQuestion',
+				data: ({
+					type: 'addQuestion',
+					category: cat,
+					question: que,
+					status: sta
+				}),
+				dataType: "json",
+				success: function(data){
+					if(data.status=='success'){
+						location.reload();
+					}
+				}
+			});
+		})
+
+		<?php if($this->session->flashdata('saveModal_Edit')){ ?>
+	  swal({
+      title: "Question Edited Successfully",
+      text: "Congratulations you have edited a question!",
+      type: "success",
+      showConfirmButton: false,
+      allowOutsideClick: true
+    });
+	  <?php } ?>
+
+		<?php if($this->session->flashdata('addQuestion')){ ?>
+	  swal({
+      title: "Question Added Successfully",
+      text: "Congratulations you have added a question!",
+      type: "success",
+      showConfirmButton: false,
+      allowOutsideClick: true
+    });
+	  <?php } ?>
+
+	});
 
 	function chkbox(i){
 		if($('.switch_'+i).is(":checked")){

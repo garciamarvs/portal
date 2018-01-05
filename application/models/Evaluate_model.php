@@ -274,6 +274,16 @@ class Evaluate_model extends CI_Model{
 		$this->db->update('questions', $data);
 	}
 
+	function addQuestion($category, $question, $status){
+		$data = array(
+						'category' => $category,
+						'question' => $question,
+						'active'	 => $status
+		);
+
+		$this->db->insert('questions', $data);
+	}
+
 	function getFacultyByCollege($college){
 		$query = $this->db->get_where('user', array('usertype' => '2', 'college' => $college));
 		return $query->result_array();
