@@ -4,18 +4,10 @@ $fname = $this->session->userdata('fname');
 $mname = $this->session->userdata('mname');
 $lname = $this->session->userdata('lname');
 switch ($this->session->userdata('usertype')) {
-	case '1':
-		$usertype = 'Student';
-		break;
-	case '2':
-		$usertype = 'Faculty';
-		break;
-	case '5':
-		$usertype = 'Administrator';
-		break;	
-	default:
-		$usertype = 'Not yet assigned';
-		break;
+	case '1': $usertype = 'Student'; break;
+	case '2':	$usertype = 'Faculty'; break;
+	case '5':	$usertype = 'Administrator'; break;	
+	default: $usertype = 'Not yet assigned'; break;
 	}
 ?>
 
@@ -85,9 +77,7 @@ switch ($this->session->userdata('usertype')) {
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 							<span class="clear"><span class="block m-t-xs"><strong class="font-bold"><?= $fname.' '.$mname.' '.$lname ?></strong></span><span class="text-muted text-xs block"><?= $usertype ?><b class="caret"></b></span></span></a>
 							<ul class="dropdown-menu animated fadeInRight m-t-xs">
-								<li><a href="profile.html">Profile</a></li>
-								<li><a href="contacts.html">Contacts</a></li>
-								<li><a href="mailbox.html">Mailbox</a></li>
+								<li><a href="#">Profile</a></li>
 								<li class="divider"></li>
 								<li><a href="<?= base_url()?>home/logout">Logout</a></li>
 							</ul>

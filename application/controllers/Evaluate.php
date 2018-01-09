@@ -154,9 +154,7 @@ class Evaluate extends CI_Controller {
 
 			$this->session->set_flashdata('checkActiveSched_false', true);
 
-			$this->load->view('templates/header');
-			$this->load->view('evaluate/schedule', $data);
-			$this->load->view('templates/footer');
+			redirect('evaluate/schedule');
 		}
 	}
 
