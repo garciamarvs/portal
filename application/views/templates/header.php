@@ -92,10 +92,10 @@ switch ($this->session->userdata('usertype')) {
 						<a href="<?= base_url()?>evaluate"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
 					</li>
 					<li>
-						<a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Enroll</span></a>
+						<a href="<?= base_url()?>enroll"><i class="fa fa-envelope"></i> <span class="nav-label">Enroll</span></a>
 					</li>
 					<li>
-						<a href="#"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
+						<a href="<?= base_url()?>viewgrade"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
 					</li>
 					<?php } ?>
 					<?php if($this->session->userdata('usertype')==5){ ?>					
@@ -105,6 +105,12 @@ switch ($this->session->userdata('usertype')) {
 	          	<li><a href="<?= base_url()?>evaluate/schedule">Schedule</a></li>
 	            <li><a href="<?= base_url()?>evaluate/result">Result</a></li>
 	            <li><a href="<?= base_url()?>evaluate/questions">Questions</a></li>
+	          </ul>
+          </li>
+          <li>
+	          <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Enrollment</span><span class="fa arrow"></span></a>
+	          <ul class="nav nav-second-level collapse">
+	          	<li><a href="<?= base_url()?>enroll/schedule">Schedule</a></li>
 	          </ul>
           </li>
           <?php } ?>

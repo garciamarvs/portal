@@ -1,5 +1,5 @@
 <?php
-class Evaluate_model extends CI_Model{
+class Evaluate_model extends CI_Model {
 	public function getEvalStatus()
 	{
 		$query = $this->db->get_where('status', array('name' => 'faculty_eval', 'active' => 1));
@@ -9,11 +9,13 @@ class Evaluate_model extends CI_Model{
 	public function getCourse($sem_id, $user_id)
 	{
 		$query = $this->db->get_where('course_log', array('sem_id' => $sem_id, 'student' => $user_id));
-		$courses = $query->result_array();
+		$result = $query->row_array();
 
 		$toSend = array();
-		foreach ($courses as $c) {
-			$a = $this->evaluate_model->getCourseById($c['course']);
+		$courses = json_decode($result['course']);
+
+		foreach ((array) $courses as $c) {
+			$a = $this->evaluate_model->getCourseById($c->course);
 			array_push($toSend, $a);
 		}
 
@@ -187,7 +189,9 @@ class Evaluate_model extends CI_Model{
 				$i = $this->evaluate_model->getUserById($c['instructor']);
 				$instructor = $i['first_name'].' '.$i['middle_name'].' '.$i['last_name'];
 
-				$toPush = array('id' => $c['id'], 'title' => $c['title'], 'code' => $c['code'], 'faculty' => $instructor, 'rating' => $rating, 'remarks' => $remarks);
+				$section = $this->evaluate_model->getSectionById($c['section_id']);
+
+				$toPush = array('id' => $c['id'], 'title' => $c['title'], 'code' => $c['code'], 'faculty' => $instructor, 'rating' => $rating, 'remarks' => $remarks, 'section' => $section['name']);
 
 				array_push($var1, $toPush);				
 				// print_r($itemA); echo '<br>';
@@ -206,8 +210,10 @@ class Evaluate_model extends CI_Model{
 		return $var1;
 	}
 
-	public function test(){
-		
+	public function getSectionById($id)
+	{
+		$query = $this->db->get_where('ref_section', array('id'=>$id));
+		return $query->row_array();
 	}
 
 	public function addEvalSched($name, $sem_id, $active, $start_date, $date)

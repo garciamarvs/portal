@@ -21,6 +21,9 @@ class Home extends CI_Controller {
 		$this->session->unset_userdata('lname');
 		$this->session->unset_userdata('image');
 		$this->session->unset_userdata('usertype');
+		$this->session->unset_userdata('college');
+		$this->session->unset_userdata('course');
+		$this->session->unset_userdata('user_ID');
 
 		// Set message
 		$this->session->set_flashdata('loggedout', true);

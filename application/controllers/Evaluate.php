@@ -7,6 +7,13 @@ class Evaluate extends CI_Controller {
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
 		}
+		if($this->session->userdata('usertype') != 1){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
 
 		$this->load->view('templates/header');
 		$this->load->view('evaluate/index');
@@ -17,6 +24,13 @@ class Evaluate extends CI_Controller {
 	{
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 1){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
 		}
 
 		$this->load->view('templates/header');
@@ -29,7 +43,13 @@ class Evaluate extends CI_Controller {
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
 		}
-
+		if($this->session->userdata('usertype') != 1){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
 		if($this->evaluate_model->getTaposNa($course_id)){
 			redirect('evaluate/form');
 		}
@@ -113,6 +133,13 @@ class Evaluate extends CI_Controller {
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
 		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
 
 		$data['sem'] = $this->evaluate_model->getSem();
 		$data['college'] = $this->evaluate_model->getCollege();
@@ -124,6 +151,17 @@ class Evaluate extends CI_Controller {
 
 	public function report($course_id)
 	{
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$this->load->helper('pdf_helper');
     $data['c'] = $this->evaluate_model->getCourseById($course_id);
     $this->load->view('evaluate/report', $data);
@@ -131,6 +169,17 @@ class Evaluate extends CI_Controller {
 
 	public function schedule()
 	{
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$this->form_validation->set_rules('sem_id', 'School Year/Semester', 'required|callback_checkActiveSched');
 		$this->form_validation->set_rules('start_date', 'Start Date', 'required');
 		$this->form_validation->set_rules('end_date', 'End Date', 'required');
@@ -160,6 +209,17 @@ class Evaluate extends CI_Controller {
 
 	public function questions()
 	{
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$this->load->view('templates/header');
 		$this->load->view('evaluate/question');
 		$this->load->view('templates/footer');
@@ -169,6 +229,13 @@ class Evaluate extends CI_Controller {
 	function getEvalResult(){
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
 		}
 
 		$sem = $this->input->post('sem');
@@ -184,6 +251,13 @@ class Evaluate extends CI_Controller {
 		if(!$this->session->userdata('logged_in')){
 			redirect('login');
 		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
 
 		$college = $this->input->post('college');
 		if($this->input->post('type') == 'getFaculty'){
@@ -194,6 +268,17 @@ class Evaluate extends CI_Controller {
 	}
 
 	function disableEvalSched(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$id = $this->input->post('id');
 
 		if($this->input->post('type') == 'disableEvalSched'){
@@ -204,6 +289,17 @@ class Evaluate extends CI_Controller {
 	}
 
 	function populateModal_Edit(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$id = $this->input->post('id');
 		if($this->input->post('type') == 'modal_edit'){
 			$q = $this->evaluate_model->getQuestionById($id);
@@ -213,6 +309,17 @@ class Evaluate extends CI_Controller {
 	}
 
 	function saveModal_Edit(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$id = $this->input->post('id');
 		$category = $this->input->post('category');
 		$question = $this->input->post('question');
@@ -226,6 +333,17 @@ class Evaluate extends CI_Controller {
 	}
 
 	function chkbox(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$active = $this->input->post('active');
 		$id = $this->input->post('id');
 
@@ -237,6 +355,17 @@ class Evaluate extends CI_Controller {
 	}
 
 	function addQuestion(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
 		$category = $this->input->post('category');
 		$question = $this->input->post('question');
 		$status = $this->input->post('status');
@@ -258,5 +387,4 @@ class Evaluate extends CI_Controller {
 			return true;
 		}
 	}
-
 }

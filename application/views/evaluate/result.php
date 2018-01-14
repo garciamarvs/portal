@@ -42,9 +42,10 @@
   <thead>
   <tr>
     <th class="text-center col-md-1">#</th>
-    <th class="col-md-3">Faculty Name</th>
+    <th class="col-md-2">Faculty Name</th>
     <th class="col-md-1">Code</th>
     <th class="col-md-4">Subject</th>
+    <th class="col-md-1">Section</th>
     <th class="col-md-1">Rating</th>
     <th class="col-md-2" colspan="2">Remarks</th>
   </tr>
@@ -86,7 +87,7 @@
 					$('#theError').empty();
 					if(data.res.length>0){
 						for(var i=0;i<=data.res.length;i++){
-						var content = '<tr><td class="text-center">'+(i+1)+'</td><td>'+data.res[i].faculty+'</td><td>'+data.res[i].code+'</td><td>'+data.res[i].title+'</td><td>'+data.res[i].rating+'</td><td>'+data.res[i].remarks+'</td><td><a href="'+base_url+'evaluate/report/'+data.res[i].id+'"><i class="fa fa-file"></i></a></td></tr>';
+						var content = '<tr><td class="text-center">'+(i+1)+'</td><td>'+data.res[i].faculty+'</td><td>'+data.res[i].code+'</td><td>'+data.res[i].title+'</td><td>'+data.res[i].section+'</td><td>'+data.res[i].rating+'</td><td>'+data.res[i].remarks+'</td><td><a href="'+base_url+'evaluate/report/'+data.res[i].id+'"><i class="fa fa-file"></i></a></td></tr>';
 						$('#theTable').append(content);
 						}
 					} else {

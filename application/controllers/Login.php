@@ -30,6 +30,9 @@ class Login extends CI_Controller {
 					'mname'			=> $user['middle_name'],
 					'lname' 	  => $user['last_name'],
 					'usertype'  => $user['usertype'],
+					'college'		=> $user['college'],
+					'course'		=> $user['course'],
+					'user_ID'		=> $user['user_ID'],
 					'logged_in' => true
 				);
 

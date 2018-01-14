@@ -89,6 +89,8 @@
 				$i = $this->evaluate_model->getUserById($c['instructor']);
 				$instructor = $i['first_name'].' '.$i['middle_name'].' '.$i['last_name'];
 
+				$section = $this->evaluate_model->getSectionById($c['section_id']);
+
 				$toPush = array('id' => $c['id'], 'title' => $c['title'], 'code' => $c['code'], 'faculty' => $instructor, 'rating' => $rating, 'remarks' => $remarks);
 				
 				// print_r($itemA); echo '<br>';
@@ -124,7 +126,13 @@ $instructor = $i['first_name'].' '.$i['middle_name'].' '.$i['last_name'];
 $j = $this->evaluate_model->getSemById($c['sem_id']); $year_sem = substr($j['name'],2,10); $sem_name = substr($j['name'],12);
 
 $obj_pdf->SetY(40);
-$html = '<table cellspacing="0" cellpadding="4" border="1"><tr><td>Subject Code:<br><b>'.$c['code'].'</b></td><td>Subject Title:<br><b>'.$c['title'].'</b></td><td>Professor:<br><b>'.$instructor.'</b></td><td>School Year:<br><b>'.$year_sem.'</b></td><td>Semester:<br><b>'.$sem_name.'</b></td></tr></table>';
+$html = '<table cellspacing="0" cellpadding="4" border="1"><tr>
+<td width="70">Subject Code:<br><b>'.$c['code'].'</b></td>
+<td width="50">Section:<br><b>'.$section['name'].'</b></td>
+<td width="162">Subject Title:<br><b>'.$c['title'].'</b></td>
+<td width="95">Professor:<br><b>'.$instructor.'</b></td>
+<td width="70">School Year:<br><b>'.$year_sem.'</b></td>
+<td width="80">Semester:<br><b>'.$sem_name.'</b></td></tr></table>';
 $obj_pdf->writeHTML($html, true, false, true, false, '');
 
 $tbl = <<<EOD
