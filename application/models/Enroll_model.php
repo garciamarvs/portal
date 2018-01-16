@@ -150,16 +150,18 @@ class Enroll_model extends CI_Model{
 			if ($value['prerequisite/corequisite']!="") {
 				$temp = explode(",", $value['prerequisite/corequisite']);
 				$ctr = 0; $cap = count($temp);
+				$x_co = array_column($courses, 'code');
 				foreach ($temp as $t) {
-					if(in_array($t, array_column($courses, 'code'))) {
-						$grade = $this->enroll_model->calcGrade($courses[$key]['grade']);		
+					$temp2 = array_search($t, $x_co);
+					if($temp2) {
+						$grade = $this->enroll_model->calcGrade($courses[$temp2]['grade']);
 				    // echo "FOUND ";
 				    if($grade['remarks']=='PASSED'){
 							// echo "PASSED <br>";
 							$ctr++;
 							if($ctr==$cap){
 								array_push($toEnroll, $value);
-							}				
+							}
 						}
 					} else {
 						// echo "NOT FOUND <br>";
