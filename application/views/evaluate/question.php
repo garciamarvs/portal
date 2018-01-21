@@ -5,7 +5,7 @@ $C = $this->evaluate_model->getQuestionsByCategoryAll('C');
 $D = $this->evaluate_model->getQuestionsByCategoryAll('D');
 $E = $this->evaluate_model->getQuestionsByCategoryAll('E');
 
-if($this->evaluate_model->getActiveSched()){$disable = true;}
+if($this->evaluate_model->getActiveSched()){$disable = true;}else{$disable = false;}
 ?>
 <style type="text/css">
 	span.switchery.switchery-default{width: 30px !important; height: 15px !important;} 

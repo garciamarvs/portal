@@ -6,6 +6,7 @@ $lname = $this->session->userdata('lname');
 switch ($this->session->userdata('usertype')) {
 	case '1': $usertype = 'Student'; break;
 	case '2':	$usertype = 'Faculty'; break;
+	case '3':	$usertype = 'Dean'; break;
 	case '5':	$usertype = 'Administrator'; break;	
 	default: $usertype = 'Not yet assigned'; break;
 	}
@@ -97,8 +98,25 @@ switch ($this->session->userdata('usertype')) {
 					<li>
 						<a href="<?= base_url()?>viewgrade"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
 					</li>
-					<?php } ?>
-					<?php if($this->session->userdata('usertype')==5){ ?>					
+					<?php } elseif($this->session->userdata('usertype')==2){ $sem = $this->course_model->getSemForFaculty(); ?>
+					<li>
+	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Course Masterlist</span><span class="fa arrow"></span></a>
+	          <ul class="nav nav-second-level collapse">
+	          	<?php if($sem){
+	          		foreach ($sem as $key => $value) {
+	          			$sy = $this->course_model->getSemById($value['sem_id']);
+	          			echo '<li><a href="'.base_url().'course/index/'.$sy['id'].'">'.$sy['name'].'</a></li>';
+	          		}
+	          	} else {
+	          		echo '<li><a href="#">No Data Found</a></li>';
+	          	} ?>
+	          </ul>
+          </li>
+					<?php } elseif($this->session->userdata('usertype')==3){ ?>
+					<li>
+						<a href="<?= base_url()?>assignfaculty"><i class="fa fa-book"></i> <span class="nav-label">Assign Faculty</span></a>
+					</li>
+					<?php } elseif($this->session->userdata('usertype')==5){ ?>				
 					<li>
 	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Faculty Evaluation</span><span class="fa arrow"></span></a>
 	          <ul class="nav nav-second-level collapse">
