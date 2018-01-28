@@ -283,8 +283,32 @@ class Evaluate extends CI_Controller {
 
 		if($this->input->post('type') == 'disableEvalSched'){
 			$this->evaluate_model->disableEvalSched($id);
-			
 			echo json_encode(array('status' => 'success'));
+		}
+	}
+
+	function setEvalSched(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
+		$id = $this->input->post('id');
+		$active = $this->input->post('active');
+
+		if($this->input->post('type') == 'setEvalSched'){
+			if($this->evaluate_model->getActiveSched()){
+				echo json_encode(array('status' => 'failed'));
+			} else {
+				$this->evaluate_model->setEvalSched($id, $active);
+				echo json_encode(array('status' => 'success'));
+			}
 		}
 	}
 
@@ -347,7 +371,7 @@ class Evaluate extends CI_Controller {
 		$active = $this->input->post('active');
 		$id = $this->input->post('id');
 
-		if($this->input->post('type') == 'chkbox'){			
+		if($this->input->post('type') == 'chkbox'){	
 			$this->evaluate_model->chkbox($id, $active);
 
 			echo json_encode(array('status' => 'success'));

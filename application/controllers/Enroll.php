@@ -65,6 +65,31 @@ class Enroll extends CI_Controller {
 		}
 	}
 
+	function setEvalSched(){
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
+		$id = $this->input->post('id');
+		$active = $this->input->post('active');
+
+		if($this->input->post('type') == 'setEvalSched'){
+			if($this->enroll_model->getActiveSched()){
+				echo json_encode(array('status' => 'failed'));
+			} else {
+				$this->evaluate_model->setEvalSched($id, $active);
+				echo json_encode(array('status' => 'success'));
+			}
+		}
+	}
+
 	//Callbacks
 	public function checkActiveSched(){
 		if($this->enroll_model->getActiveSched()){

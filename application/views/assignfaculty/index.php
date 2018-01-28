@@ -4,9 +4,9 @@
     <ol class="breadcrumb">
       <li class="active">
         <strong>SY: Semester</strong>
-      </li>
+      </li>      
       <li>
-      	<select id="sy" class="form-control">
+      	<select id="sy" class="custom">
       		<?php foreach ($sy as $key => $value) { ?>
        		<option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
        		<?php } ?>
@@ -30,6 +30,17 @@
 		background-color: #1ab394 !important;
     color: #ffffff !important;
 	}
+
+  .custom {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    font-size: 14px;
+  }
 </style>
 
 <div class="row">

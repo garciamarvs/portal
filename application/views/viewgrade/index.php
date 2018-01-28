@@ -84,7 +84,15 @@
             else if(num1>= 0.00&&num1<=74.99){a = '1.00'; b = '5.00'; c = 'D'; d = 'FAILED';}
             num1 = num1.toFixed(2);
             var content = '<tr><td></td><td class="text-right"><b>Total Units:</b></td><td class="text-center"><b>24</b></td><td></td><td></td><td></td><td></td><td></td></tr>';
-            content += '<tr><td></td><td class="text-right"><b>GENERAL WEIGHTED AVERAGE(GWA):</b></td><td></td><td class="text-center"><b>'+num1+'</b></td><td class="text-center"><b>'+a+'</b></td><td class="text-center"><b>'+b+'</b></td><td class="text-center"><b>'+c+'</b></td><td></td></tr>;';
+            content += '<tr><td></td><td class="text-right"><b>GENERAL WEIGHTED AVERAGE(GWA):</b></td><td></td><td class="text-center"><b>'+num1+'</b></td><td class="text-center"><b>'+a+'</b></td><td class="text-center"><b>'+b+'</b></td><td class="text-center"><b>'+c+'</b></td><td></td></tr><tr><td></td><td class="text-right"><b>ACADEMIC STANDING:</b></td><td class="text-center"><b>';
+
+            if(num1>=75.00){
+              content += 'GS';
+            } else {
+              content += 'WS';
+            }
+
+            content += '</b></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
             $('#theTable').append(content);
           } else {
             var content = '<h3 class="font-bold">No Data Found.</h3>';

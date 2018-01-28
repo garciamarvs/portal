@@ -19,7 +19,8 @@ class Course extends CI_Controller {
 
 		if($sem_id && $data['courses']){
 			$sy = $this->course_model->getSemById($sem_id);
-			$data['sem'] = $sy['name'];
+			$data['sem']['name'] = $sy['name'];
+			$data['sem']['id'] = $sy['id'];
 
 			$this->load->view('templates/header');
 			$this->load->view('course/index', $data);

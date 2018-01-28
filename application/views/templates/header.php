@@ -131,6 +131,12 @@ switch ($this->session->userdata('usertype')) {
 	          	<li><a href="<?= base_url()?>enroll/schedule">Schedule</a></li>
 	          </ul>
           </li>
+          <li>
+	          <a href="#"><i class="fa fa-calendar"></i> <span class="nav-label">Semester</span><span class="fa arrow"></span></a>
+	          <ul class="nav nav-second-level collapse">
+	          	<li><a href="<?= base_url()?>semester/enrolled">Students Enrolled</a></li>
+	          </ul>
+          </li>
           <?php } ?>
 				</ul>
 			</div>

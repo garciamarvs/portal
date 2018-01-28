@@ -116,7 +116,15 @@ $html .= '
 	<tr>
 		<td></td>
 		<td align="right"><b>ACADEMIC STANDING:</b></td>
-		<td></td>
+		<td align="center"><b>';
+
+if(($num1/$tUnits)>=75.00){
+	$html .= 'GS';
+} else {
+	$html .= 'WS';
+}
+
+$html .= '</b></td>
 		<td></td>
 		<td></td>
 		<td></td>

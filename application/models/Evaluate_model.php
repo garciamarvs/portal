@@ -256,6 +256,14 @@ class Evaluate_model extends CI_Model {
 		$this->db->update('status', $data);
 	}
 
+	function setEvalSched($id, $active){
+		$data = array(
+						'active' => $active
+		);
+		$this->db->where('id', $id);
+		$this->db->update('status', $data);
+	}
+
 	function chkbox($id, $active){
 		$data = array(
 						'active' => $active

@@ -47,9 +47,9 @@
         		<td><?php $a = $this->evaluate_model->getSemById($s['sem_id']); echo $a['name']; ?></td>
         		<td><?= substr($s['start_date'], 0, 10); ?></td>
         		<td><?= substr($s['date'], 0, 10); ?></td>
-        		<td><?php if($s['active']=='1'){
+        		<td id="text<?= $s['id'] ?>"><?php if($s['active']=='1'){
         			if(strtotime($s['date']) > time() && time() > strtotime($s['start_date'])){
-        				echo 'Active</td><td><span class="tooltip-demo"><input type="checkbox" class="switch" id="switch" checked></span>'.'<script type="text/javascript">$(document).ready(function(){var elem_1 = document.querySelector(".switch");var switch_1 = new Switchery(elem_1, { color: "#1AB394" });$("#switch").on("change", function(){dES('.$s['id'].');});$(".tooltip-demo span").attr("data-toggle", "tooltip");$(".tooltip-demo span").attr("data-placement", "top");$(".tooltip-demo span").attr("data-original-title", "Disable");function dES(id){$.ajax({type:"POST",url:base_url+"evaluate/disableEvalSched",data:({type:"disableEvalSched",id:id}),dataType:"json",success:function(data){if(data.status=="success"){switch_1.disable();}}});}});</script>';
+        				echo 'Active</td><td><span class="tooltip-demo"><div class="onoffswitch"><input type="checkbox" checked class="onoffswitch-checkbox" id="switch'.$s['id'].'" onchange="dES('.$s['id'].');"><label class="onoffswitch-label" for="switch'.$s['id'].'"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></span>';
         			} else {
         				$data = array(
 												'active' => 0
@@ -57,10 +57,10 @@
 								$this->db->where('id', $s['id']);
 								$this->db->update('status', $data);
 
-								echo 'Inactive';
+								echo 'Inactive</td><td><span class="tooltip-demo"><div class="onoffswitch"><input type="checkbox" class="onoffswitch-checkbox" id="switch'.$s['id'].'" onchange="dES('.$s['id'].');"><label class="onoffswitch-label" for="switch'.$s['id'].'"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></span>';
         			}
         		} else {
-        			echo 'Inactive';
+        			echo 'Inactive</td><td><span class="tooltip-demo"><div class="onoffswitch"><input type="checkbox" class="onoffswitch-checkbox" id="switch'.$s['id'].'" onchange="dES('.$s['id'].');"><label class="onoffswitch-label" for="switch'.$s['id'].'"><span class="onoffswitch-inner"></span><span class="onoffswitch-switch"></span></label></div></span>';
         		} 
         		?></td>
         		<td></td>
@@ -72,6 +72,52 @@
 		</div>
 	</div>
 </div>
+
+<script>
+function dES(id){
+	if($('#switch'+id).is(':checked')){
+		$.ajax({
+			type:"POST",
+			url:base_url+"evaluate/setEvalSched",
+			data:({
+				type:"setEvalSched",
+				id:id,
+				active: 1
+			}),
+			dataType:"json"
+		}).done(function(data){
+			if(data.status=="success"){
+				$('#text'+id).text('Active');
+				// alert('UP');
+			} else {
+				$('#switch'+id).prop('checked', false);
+				swal({
+		      title: "Evaluation Schedule Still Ongoing!",
+		      text: "Close the active schedule before adding a new schedule.",
+		      type: "warning",
+		      showConfirmButton: false,
+		      allowOutsideClick: true
+		    });
+			}
+		});
+	} else {
+		$.ajax({
+			type:"POST",
+			url:base_url+"evaluate/disableEvalSched",
+			data:({
+				type:"disableEvalSched",
+				id:id
+			}),
+			dataType:"json"
+		}).done(function(data){
+			if(data.status=="success"){
+				$('#text'+id).text('Inactive');
+				// alert('DOWN');
+			}
+		});
+	}
+}
+</script>
 
 <hr style="border-bottom:2px solid #737373; margin: 0;">
 

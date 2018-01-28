@@ -15,6 +15,7 @@
 <div class="row p-md">
 	<div class="ibox m-b-none">
 		<div class="ibox-content">
+			<?php if($students){ ?>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -26,22 +27,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php if($students){
-					 foreach ($students as $key => $value) {
-					 $i = $this->course_model->getStudentById($value['student']); ?>
+					<?php foreach ($students as $key => $value) { ?>
 					<tr>
 						<td class="text-center"><?= ($key+1) ?></td>
-						<td><?= $i['first_name'].' '.$i['middle_name'].' '.$i['last_name'] ?></td>
-						<td><?= $i['user_ID'] ?></td>
+						<td><?= $value['last_name'].', '.$value['first_name'].' '.$value['middle_name'] ?></td>
+						<td><?= $value['user_ID'] ?></td>
 					</tr>
 					<?php } ?>
 				</tbody>
 			</table>
+			<?php } else { ?>
 		</div>
 	</div>
 </div>
-
-<?php } else { ?>
 
 <div class="middle-box text-center animated fadeInDown"><h3 class="font-bold">No Data Found.</h3></div>
 <?php } ?>
