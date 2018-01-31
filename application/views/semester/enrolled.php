@@ -1,6 +1,6 @@
-<div class="row wrapper border-bottom white-bg page-heading" style="margin-top:0;">
-	<div class="col-lg-10">
+<div class="row wrapper border-bottom white-bg page-heading" style="margin-top:0;">	
 	  <h2>Students Enrolled</h2>
+  <div class="col-lg-6">
     <ol class="breadcrumb">
       <li class="active">
         <strong>SY: Semester</strong>
@@ -16,9 +16,26 @@
       </li>
     </ol>
 	</div>
-	<div class="col-lg-2">
-	</div>
+  <div class="col-lg-6">
+    <?php echo form_open(base_url().'semester/search'); ?>
+    <div class="row pull-right">
+      <div class="input-group col-sm-12">
+        <input type="text" placeholder="e.g., Student ID or Name" name="search" class="form-control col-sm-4" required="">
+        <div class="input-group-btn">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </div>
+    </div>
+    <?php echo form_close(); ?>
+  </div>
 </div>
+
+<style>
+  .input-group .form-control {
+    float: right !important;
+    width: 50% !important;
+  }
+</style>
 
 
 <div class="row p-md">
@@ -38,8 +55,8 @@
         <tbody>
            <?php foreach ($students as $key => $value) { ?>
           <tr>
-            <td class="text-center"><?= ($key+1) ?></td>
-            <td><?= $value['last_name'].', '.$value['first_name'].' '.$value['middle_name'] ?></td>
+            <td class="text-center"><?php if($offset>0){ echo $offset+($key+1);}else{ echo ($key+1);} ?></td>
+            <td><?php if($value['last_name']==''){echo $value['first_name'].' '.$value['middle_name'];}else{ echo $value['last_name'].', '.$value['first_name'].' '.$value['middle_name'];} ?></td>
             <td><?= $value['user_ID'] ?></td>
           </tr>
           <?php } ?>

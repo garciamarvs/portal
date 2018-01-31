@@ -47,9 +47,78 @@ class Semester extends CI_Controller {
 
 		$data['currSY'] = $sy;
 		$data['students'] = $this->semester_model->getStudentSem($sy, $config['per_page'], $offset);
+		$data['limit'] = $config['per_page'];
+		$data['offset'] = $offset;
 
 		$this->load->view('templates/header');
 		$this->load->view('semester/enrolled', $data);
 		$this->load->view('templates/footer');
+	}
+
+	public function search()
+	{
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
+		$this->form_validation->set_rules('search', 'Search', 'trim|required|max_length[100]');
+
+		if($this->form_validation->run() === FALSE){
+			redirect('semester/enrolled');
+		} else {
+			$search = $this->input->post('search');
+
+			$data['students'] = $this->semester_model->searchStudent($search);
+
+			$this->load->view('templates/header');
+			$this->load->view('semester/search', $data);
+			$this->load->view('templates/footer');
+		}
+	}
+
+	public function viewStudent()
+	{
+		if(!$this->session->userdata('logged_in')){
+			redirect('login');
+		}
+		if($this->session->userdata('usertype') != 5){
+			$this->load->view('403');
+			// Force the CI engine to render the content generated until now    
+			$this->CI =& get_instance(); 
+			$this->CI->output->_display();
+			die();
+		}
+
+		$this->form_validation->set_rules('data', 'ID', 'trim|required');
+
+		if($this->form_validation->run() === FALSE){
+			redirect('semester/enrolled');
+		} else {
+			$id = $this->input->post('data');
+			$data['sy'] = $this->semester_model->getSemForSel($id);
+			$data['std'] = $this->semester_model->getUserById($id);
+
+			$this->load->view('templates/header');
+			$this->load->view('semester/viewstudent', $data);
+			$this->load->view('templates/footer');
+		}
+	}
+
+	function populateTable(){
+		$id = $this->input->post('id');
+		$std = $this->input->post('idd');
+
+		if($this->input->post('type') == 'populateTable'){
+			$data = $this->semester_model->populateTable($id, $std);
+
+			echo json_encode(array('status' => 'success', 'courses' => $data));
+		}
 	}
 }

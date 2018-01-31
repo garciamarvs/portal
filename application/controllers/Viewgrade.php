@@ -24,7 +24,7 @@ class Viewgrade extends CI_controller {
 	function populateTable(){
 		$id = $this->input->post('id');
 
-		if($this->input->post('type') == 'populateTable'){			
+		if($this->input->post('type') == 'populateTable'){
 			$data = $this->viewgrade_model->populateTable($id);
 
 			echo json_encode(array('status' => 'success', 'courses' => $data));

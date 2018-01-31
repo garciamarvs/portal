@@ -59,7 +59,7 @@
 				<?php $ctr=1; foreach ($courses as $key => $value) {
 				if($ctr!=1){
 					echo '<div id="tab-'.$ctr.'" class="tab-pane"><div id="foo-'.$ctr.'" class="panel-body"></div></div>'; $ctr++;
-				} else { 
+				} else {
 					echo '<div id="tab-'.$ctr.'" class="tab-pane active"><div id="foo-'.$ctr.'" class="panel-body"></div></div>'; $ctr++;
 				} ?>
 				<?php } ?>
@@ -114,31 +114,36 @@
     			if(data.status="success"){
     				console.log(data.out);
     				$('#foo-'+(index+1)).empty();
-    				// console.log('Iteration: '+index+' Value: '+value);
-    				$.each(data.out, function(x, y){
-    					var content = '';
+            if(data.out==false){
+              var content = '<div class="middle-box text-center animated fadeInDown"><h3 class="font-bold">No Data Found.</h3></div>';
+              $('#foo-'+(index+1)).append(content);
+            } else {
+              // console.log('Iteration: '+index+' Value: '+value);
+              $.each(data.out, function(x, y){
+                var content = '';
 
-    					$.each(y, function(a, b){
-    						if(b.title === undefined){
+                $.each(y, function(a, b){
+                  if(b.title === undefined){
 
-    						} else {
-    							if(a==0){
-    								content += '<div class="row"><div class="panel panel-primary"><div class="panel-heading">'+y.section_name+'</div><div class="panel-body" style="margin-left:0;"><table class="table"><thead><tr><th class="col-md-1 text-center">Subject Code</th><th class="col-md-4">Subject Title</th><th class="col-md-3">Faculty</th><th class="col-md-1 text-center">Section</th></tr></thead><tbody>';
-    							}
-    							content += '<tr><td class="text-center">'+b.code+'</td><td>'+b.title+'</td><td><select class="form-control" onchange="setFaculty(this, '+b.id+');">';
+                  } else {
+                    if(a==0){
+                      content += '<div class="row"><div class="panel panel-primary"><div class="panel-heading">'+y.section_name+'</div><div class="panel-body" style="margin-left:0;"><table class="table"><thead><tr><th class="col-md-1 text-center">Subject Code</th><th class="col-md-4">Subject Title</th><th class="col-md-3">Faculty</th><th class="col-md-1 text-center">Section</th></tr></thead><tbody>';
+                    }
+                    content += '<tr><td class="text-center">'+b.code+'</td><td>'+b.title+'</td><td><select class="form-control" onchange="setFaculty(this, '+b.id+');">';
 
-    							<?php foreach ($faculties as $key => $value) {
-    								echo 'content += \'<option value="'.$value['id'].'">'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\';';
-    							} ?>
+                    <?php foreach ($faculties as $key => $value) {
+                      echo 'if(b.instructor=="'.$value['id'].'"){content += \'<option value="'.$value['id'].'" selected>'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\'} else {content += \'<option value="'.$value['id'].'">'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\'}';
+                    } ?>
 
-    							content += '</select></td><td class="text-center">'+b.section+'</td></tr>';
-    						}
-    					});
-    					if(content!=''){
-    						content += '</tbody></table></div></div></div>';
-    					$('#foo-'+(index+1)).append(content);
-    					}
-    				});    				
+                    content += '</select></td><td class="text-center">'+b.section+'</td></tr>';
+                  }
+                });
+                if(content!=''){
+                  content += '</tbody></table></div></div></div>';
+                $('#foo-'+(index+1)).append(content);
+                }
+              });
+            }
     			}
     		});
     });

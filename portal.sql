@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2018 at 05:44 PM
+-- Generation Time: Jan 31, 2018 at 06:16 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.0.27
 
@@ -47,7 +47,7 @@ CREATE TABLE `course` (
 
 INSERT INTO `course` (`id`, `title`, `code`, `unit`, `schedule`, `room`, `instructor`, `section_id`, `sem_id`, `college`) VALUES
 (1, 'Data Communication & Basic Network Concepts', 'ACS311', '3', '', '', '2', '5', '6', 'CET'),
-(2, 'Database Management Systems 2', 'ACS312', '3', '', '', '2', '5', '6', 'CET'),
+(2, 'Database Management Systems 2', 'ACS312', '3', '', '', '3', '5', '6', 'CET'),
 (3, 'Multimedia Technology I', 'ACS313', '3', '', '', '2', '5', '6', 'CET'),
 (4, 'Object Oriented Programming', 'ACS314', '3', '', '', '2', '5', '6', 'CET'),
 (5, 'System Analysis & Design', 'ACS315', '3', '', '', '2', '5', '6', 'CET'),
@@ -184,7 +184,8 @@ INSERT INTO `course_log` (`id`, `sem_id`, `course`, `student`, `section_id`) VAL
 (80, '7', '[{\"course\":\"32\",\"grade\":\"87\"},{\"course\":\"33\",\"grade\":\"88\"},{\"course\":\"34\",\"grade\":\"97\"},{\"course\":\"35\",\"grade\":\"76\"},{\"course\":\"36\",\"grade\":\"84\"},{\"course\":\"37\",\"grade\":\"95\"},{\"course\":\"38\",\"grade\":\"83\"},{\"course\":\"39\",\"grade\":\"86\"}]', '41', '6'),
 (81, '7', '[{\"course\":\"32\",\"grade\":\"92\"},{\"course\":\"33\",\"grade\":\"89\"},{\"course\":\"34\",\"grade\":\"87\"},{\"course\":\"35\",\"grade\":\"93\"},{\"course\":\"36\",\"grade\":\"97\"},{\"course\":\"37\",\"grade\":\"98\"},{\"course\":\"38\",\"grade\":\"90\"},{\"course\":\"39\",\"grade\":\"91\"}]', '42', '6'),
 (82, '7', '[{\"course\":\"32\",\"grade\":\"99\"},{\"course\":\"33\",\"grade\":\"85\"},{\"course\":\"34\",\"grade\":\"85\"},{\"course\":\"35\",\"grade\":\"90\"},{\"course\":\"36\",\"grade\":\"84\"},{\"course\":\"37\",\"grade\":\"79\"},{\"course\":\"38\",\"grade\":\"77\"},{\"course\":\"39\",\"grade\":\"85\"}]', '43', '6'),
-(83, '7', '[{\"course\":\"32\",\"grade\":\"78\"},{\"course\":\"33\",\"grade\":\"94\"},{\"course\":\"34\",\"grade\":\"84\"},{\"course\":\"35\",\"grade\":\"86\"},{\"course\":\"36\",\"grade\":\"91\"},{\"course\":\"37\",\"grade\":\"82\"},{\"course\":\"38\",\"grade\":\"87\"},{\"course\":\"39\",\"grade\":\"87\"}]', '44', '6');
+(83, '7', '[{\"course\":\"32\",\"grade\":\"78\"},{\"course\":\"33\",\"grade\":\"94\"},{\"course\":\"34\",\"grade\":\"84\"},{\"course\":\"35\",\"grade\":\"86\"},{\"course\":\"36\",\"grade\":\"91\"},{\"course\":\"37\",\"grade\":\"82\"},{\"course\":\"38\",\"grade\":\"87\"},{\"course\":\"39\",\"grade\":\"87\"}]', '44', '6'),
+(84, '6', '[{\"course\":\"1\",\"grade\":\"90\"},{\"course\":\"2\",\"grade\":\"87\"},{\"course\":\"3\",\"grade\":\"95\"},{\"course\":\"4\",\"grade\":\"94\"},{\"course\":\"5\",\"grade\":\"86\"},{\"course\":\"6\",\"grade\":\"89\"},{\"course\":\"7\",\"grade\":\"90\"},{\"course\":\"8\",\"grade\":\"92\"}]', '45', '5');
 
 -- --------------------------------------------------------
 
@@ -521,7 +522,8 @@ INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `middle_name`, `
 (41, '14-0037', 'password', 'Jozu', '', '', '1', 'CET', 'IT', '14-UC-02-0037-63'),
 (42, '14-0038', 'password', 'Vista', '', '', '1', 'CET', 'IT', '14-UC-02-0038-63'),
 (43, '14-0039', 'password', 'Kuzan', '', '', '1', 'CET', 'IT', '14-UC-02-0039-63'),
-(44, '14-0040', 'password', 'Monkey', 'D.', 'Garp', '1', 'CET', 'IT', '14-UC-02-0040-63');
+(44, '14-0040', 'password', 'Monkey', 'D.', 'Garp', '1', 'CET', 'IT', '14-UC-02-0040-63'),
+(45, '14-0041', 'password', 'Issho', '', '', '1', 'CET', 'IT', '14-UC-02-0041-63');
 
 --
 -- Indexes for dumped tables
@@ -608,7 +610,7 @@ ALTER TABLE `course`
 -- AUTO_INCREMENT for table `course_log`
 --
 ALTER TABLE `course_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `eval_log`
@@ -644,13 +646,13 @@ ALTER TABLE `semester`
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

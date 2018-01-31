@@ -20,14 +20,23 @@ class Assignfaculty_model extends CI_Model {
 		$this->db->like('name', $course, 'after');
 		$query = $this->db->get('ref_section');
 
-		return $query->result_array();
+		if($query->num_rows()>0){
+			return $query->result_array();
+		} else {
+			return false;
+		}		
 	}
 
 	public function getCoursesPerSection($section, $sy)
 	{
 		$query = $this->db->get_where('course', array('section_id' => $section, 'sem_id' => $sy));
-
-		return $query->result_array();
+		
+		if($query->num_rows()>0){
+			return $query->result_array();
+		} else {
+			return false;
+		}
+		
 	}
 
 	public function getSectionById($id)
@@ -46,16 +55,24 @@ class Assignfaculty_model extends CI_Model {
 	function populatePanel($sy, $course)
 	{
 		$section = $this->assignfaculty_model->getSection($course);
-
 		$data = array();
-		foreach ($section as $key => $value) {
-			$sectionCourse = $this->assignfaculty_model->getCoursesPerSection($value['id'], $sy);
-			foreach ($sectionCourse as $k => $v) {
-				$course_section = $this->assignfaculty_model->getSectionById($v['section_id']);
-				$sectionCourse[$k]['section'] = $course_section['name'];
+
+		if($section){
+			foreach ($section as $key => $value) {
+				$sectionCourse = $this->assignfaculty_model->getCoursesPerSection($value['id'], $sy);
+				if($sectionCourse){
+					foreach ($sectionCourse as $k => $v) {
+						$course_section = $this->assignfaculty_model->getSectionById($v['section_id']);
+						$sectionCourse[$k]['section'] = $course_section['name'];
+					}
+					$sectionCourse['section_name'] = $value['name'];
+					array_push($data, $sectionCourse);
+				} else {
+					$data[] = false;
+				}
 			}
-			$sectionCourse['section_name'] = $value['name'];
-			array_push($data, $sectionCourse);
+		} else {
+			$data = false;
 		}
 
 		return $data;
