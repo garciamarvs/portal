@@ -41,8 +41,8 @@
 					<!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.</p>
 
 					<p>
-						<small>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small> -->
-					</p>
+						<small>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</small>
+					</p> -->
 				</div>
 				<div class="col-md-6">
 					<div class="ibox-content">
