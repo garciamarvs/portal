@@ -129,7 +129,7 @@
                     if(a==0){
                       content += '<div class="row"><div class="panel panel-primary"><div class="panel-heading">'+y.section_name+'</div><div class="panel-body" style="margin-left:0;"><table class="table"><thead><tr><th class="col-md-1 text-center">Subject Code</th><th class="col-md-4">Subject Title</th><th class="col-md-3">Faculty</th><th class="col-md-1 text-center">Section</th></tr></thead><tbody>';
                     }
-                    content += '<tr><td class="text-center">'+b.code+'</td><td>'+b.title+'</td><td><select class="form-control" onchange="setFaculty(this, '+b.id+');">';
+                    content += '<tr><td class="text-center">'+b.code+'</td><td>'+b.title+'</td><td><select class="form-control" onchange="setFaculty(this, '+b.id+');"><option></option>';
 
                     <?php foreach ($faculties as $key => $value) {
                       echo 'if(b.instructor=="'.$value['id'].'"){content += \'<option value="'.$value['id'].'" selected>'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\'} else {content += \'<option value="'.$value['id'].'">'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\'}';

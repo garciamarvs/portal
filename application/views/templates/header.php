@@ -90,7 +90,7 @@ switch ($this->session->userdata('usertype')) {
 					</li>
 					<?php if($this->session->userdata('usertype')==1){ ?>
 					<li>
-						<a href="<?= base_url()?>evaluate"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
+						<a href="<?= base_url()?>evaluation"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
 					</li>
 					<li>
 						<a href="<?= base_url()?>enroll"><i class="fa fa-envelope"></i> <span class="nav-label">Enroll</span></a>
@@ -116,13 +116,19 @@ switch ($this->session->userdata('usertype')) {
 					<li>
 						<a href="<?= base_url()?>assignfaculty"><i class="fa fa-book"></i> <span class="nav-label">Assign Faculty</span></a>
 					</li>
-					<?php } elseif($this->session->userdata('usertype')==5){ ?>				
 					<li>
+						<a href="<?= base_url()?>evaluation"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
+					</li>
+					<?php } elseif($this->session->userdata('usertype')==4){ ?>
+					<li>
+						<a href="<?= base_url()?>evaluation"><i class="fa fa-pencil-square"></i> <span class="nav-label">Evaluate</span></a>
+					</li>
+					<?php } elseif($this->session->userdata('usertype')==5){ ?>
+          <li>
 	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Faculty Evaluation</span><span class="fa arrow"></span></a>
 	          <ul class="nav nav-second-level collapse">
-	          	<li><a href="<?= base_url()?>evaluate/schedule">Schedule</a></li>
-	            <li><a href="<?= base_url()?>evaluate/result">Result</a></li>
-	            <li><a href="<?= base_url()?>evaluate/questions">Questions</a></li>
+	          	<li><a href="<?= base_url()?>evaluation/schedule">Schedule</a></li>
+	            <li><a href="<?= base_url()?>evaluation/result">Result</a></li>
 	          </ul>
           </li>
           <li>
