@@ -20,7 +20,7 @@ class Assignfaculty extends CI_Controller {
 		$data['courses'] = $this->assignfaculty_model->getCourses();
 
 		$this->load->view('templates/header');
-		$this->load->view('Assignfaculty/index', $data);
+		$this->load->view('assignfaculty/index', $data);
 		$this->load->view('templates/footer');
 	}
 

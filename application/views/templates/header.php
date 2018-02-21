@@ -138,6 +138,9 @@ switch ($this->session->userdata('usertype')) {
 	          </ul>
           </li>
           <?php } ?>
+          <li style="margin-top: 20px;"><a href="http://udmlibrary.x10host.com/Home.php"><i class="fa fa-institution"></i> <span class="nav-label">UDM Library</span></a></li>
+          <li><a href="http://umis.x10host.com"><i class="fa fa-hospital-o"></i> <span class="nav-label">UDM Medical Information System</span></a></li>
+          <li><a href="<?= base_url()?>viewgrade"><i class="fa fa-users"></i> <span class="nav-label">OSA</span></a></li>
 				</ul>
 			</div>
 		</nav>
