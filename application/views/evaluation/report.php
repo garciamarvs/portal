@@ -45,6 +45,20 @@ if($f['last_name']==''){
 $obj_pdf->writeHTML($html, true, false, true, false, '');
 
 $obj_pdf->SetY(90);
+
+$s_IA = $s_IB = $s_IC = $s_ID = $s_II = 0;
+$totalStud = count($students);
+$ave_I = $ave_II = 0;
+foreach ($students as $key => $value) {
+	$s_IA += $value['a'];
+	$s_IB += $value['b'];
+	$s_IC += $value['c'];
+	$s_ID += $value['d'];
+	$s_II += $value['ii'];
+}
+$ave_I = (($s_IA/$totalStud)+($s_IB/$totalStud)+($s_IC/$totalStud)+($s_ID/$totalStud))/4;
+$ave_II = $s_II/$totalStud;
+
 $html = '
 <table cellspacing="0" cellpadding="4" style="border:1px solid #000;">
 	<tr>
@@ -54,38 +68,38 @@ $html = '
 		<td width="100" align="center" style="border:1px solid #000;">Equivalent</td>
 	</tr>
 	<tr>
-		<td style="border:1px solid #000;"><b>Student</b></td>
-		<td style="border:1px solid #000;"></td>
-		<td style="border:1px solid #000;"></td>
-		<td style="border:1px solid #000;"></td>
+		<td style="border-right:1px solid #000;"><b>Student</b></td>
+		<td style="border-right:1px solid #000;"></td>
+		<td style="border-right:1px solid #000;"></td>
+		<td style="border-right:1px solid #000;"></td>
 	</tr>
 	<tr>
 		<td style="border-right:1px solid #000;"><b>I. Teaching Effectiveness</b></td>
-		<td style="border-right:1px solid #000;" align="center">'.$student['ave_I'].'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($ave_I).'</td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 	</tr>
 	<tr>
 		<td style="border-right:1px solid #000;">&nbsp;&nbsp;&nbsp;A. Knowledge of the Subject Matter</td>
-		<td style="border-right:1px solid #000;" align="center">'.$student['a'].'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($s_IA/$totalStud).'</td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 	</tr>
 	<tr>
 		<td style="border-right:1px solid #000;">&nbsp;&nbsp;&nbsp;B. Teaching Skills</td>
-		<td style="border-right:1px solid #000;" align="center">'.$student['b'].'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($s_IB/$totalStud).'</td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 	</tr>
 	<tr>
 		<td style="border-right:1px solid #000;">&nbsp;&nbsp;&nbsp;C. Classroom Management & Evaluation Skills</td>
-		<td style="border-right:1px solid #000;" align="center">'.$student['c'].'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($s_IC/$totalStud).'</td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 	</tr>
 	<tr>
 		<td style="border-right:1px solid #000;">&nbsp;&nbsp;&nbsp;D. Motivation Strategies and Teaching</td>
-		<td style="border-right:1px solid #000;" align="center">'.$student['d'].'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($s_ID/$totalStud).'</td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 		<td style="border-right:1px solid #000;" align="center"></td>
 	</tr>
@@ -97,30 +111,30 @@ $html = '
 	</tr>
 	<tr>
 		<td style="border-right:1px solid #000;"><b>II. Personality And Public Relations</b></td>
-		<td style="border-right:1px solid #000;" align="center">'.$student['ii'].'</td>
-		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($student['ave_stud']).'</td>
-		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($student['ave_stud']*.5).'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating($ave_II).'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating(($ave_I+$ave_II)/2).'</td>
+		<td style="border-right:1px solid #000;" align="center">'.$this->evaluate_model->setRating((($ave_I+$ave_II)/2)*0.5).'</td>
 	</tr>
 	<tr>
 		<td style="border:1px solid #000;"><b>Associate Dean/Department Head</b></td>
 		<td style="border:1px solid #000;" align="center">';
 	
 	if(isset($assoc)){
-		$html .= $this->evaluate_model->setRating($assoc);
+		$html .= $this->evaluate_model->setRating(($assoc['i']+$assoc['ii']+$assoc['iii']+$assoc['iv'])/4);
 	}
 
 	$html .= '</td>
 		<td style="border:1px solid #000;" align="center">';
 	
 	if(isset($assoc)){
-		$html .= $this->evaluate_model->setRating($assoc);
+		$html .= $this->evaluate_model->setRating(($assoc['i']+$assoc['ii']+$assoc['iii']+$assoc['iv'])/4);
 	}
 
 	$html .= '</td>
 		<td style="border:1px solid #000;" align="center">';
 
 	if(isset($assoc)){
-		$html .= $this->evaluate_model->setRating($assoc*.2);
+		$html .= $this->evaluate_model->setRating((($assoc['i']+$assoc['ii']+$assoc['iii']+$assoc['iv'])/4)*.2);
 	}
 
 	$html .= '</td>
@@ -130,14 +144,14 @@ $html = '
 		<td style="border:1px solid #000;" align="center">';
 
 	if(isset($dean)){
-		$html .= $this->evaluate_model->setRating($dean);
+		$html .= $this->evaluate_model->setRating(($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4);
 	}
 
 	$html .= '</td>
 		<td style="border:1px solid #000;" align="center">';
 
 	if(isset($dean)){
-		$html .= $this->evaluate_model->setRating($dean);
+		$html .= $this->evaluate_model->setRating(($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4);
 	}
 
 	$html .= '</td>
@@ -145,9 +159,9 @@ $html = '
 
 
 	if(isset($assoc)&&isset($dean)) {
-		$html .= $this->evaluate_model->setRating($dean*.3);
+		$html .= $this->evaluate_model->setRating((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*.3);
 	} else if(isset($dean)) {
-		$html .= $this->evaluate_model->setRating($dean*.5);
+		$html .= $this->evaluate_model->setRating((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*.5);
 	}
 
 	$html .= '</td>
@@ -163,10 +177,10 @@ $html = '<br><br>
 		<td><b>';
 
 	if(isset($assoc)&&isset($dean)) {
-		$final = ($student['ave_stud']*.5)+($assoc*.2)+($dean*.3);
+		$final = ((($ave_I+$ave_II)/2)*.5)+((($assoc['i']+$assoc['ii']+$assoc['iii']+$assoc['iv'])/4)*.2)+((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*.3);
 		$html .= $this->evaluate_model->setRating($final);
 	} else if(isset($dean)) {
-		$final = ($student['ave_stud']*.5)+($dean*.5);
+		$final = ((($ave_I+$ave_II)/2)*0.5)+((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*.5);
 		$html .= $this->evaluate_model->setRating($final);
 	}
 

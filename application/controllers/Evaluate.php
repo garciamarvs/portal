@@ -227,17 +227,6 @@ class Evaluate extends CI_Controller {
 
 	//Ajaxs
 	function getEvalResult(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$sem = $this->input->post('sem');
 		$faculty = $this->input->post('faculty');
 		if($this->input->post('type') == 'getEvalResult'){
@@ -248,17 +237,6 @@ class Evaluate extends CI_Controller {
 	}
 
 	function getFaculty(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$college = $this->input->post('college');
 		if($this->input->post('type') == 'getFaculty'){
 			$faculty = $this->evaluate_model->getFacultyByCollege($college);
@@ -268,17 +246,6 @@ class Evaluate extends CI_Controller {
 	}
 
 	function disableEvalSched(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$id = $this->input->post('id');
 
 		if($this->input->post('type') == 'disableEvalSched'){
@@ -288,42 +255,17 @@ class Evaluate extends CI_Controller {
 	}
 
 	function setEvalSched(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$id = $this->input->post('id');
 		$active = $this->input->post('active');
 
 		if($this->input->post('type') == 'setEvalSched'){
-			if($this->evaluate_model->getActiveSched()){
-				echo json_encode(array('status' => 'failed'));
-			} else {
 				$this->evaluate_model->setEvalSched($id, $active);
 				echo json_encode(array('status' => 'success'));
-			}
+			
 		}
 	}
 
 	function populateModal_Edit(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$id = $this->input->post('id');
 		if($this->input->post('type') == 'modal_edit'){
 			$q = $this->evaluate_model->getQuestionById($id);
@@ -333,17 +275,6 @@ class Evaluate extends CI_Controller {
 	}
 
 	function saveModal_Edit(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$id = $this->input->post('id');
 		$category = $this->input->post('category');
 		$question = $this->input->post('question');
@@ -357,17 +288,6 @@ class Evaluate extends CI_Controller {
 	}
 
 	function chkbox(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$active = $this->input->post('active');
 		$id = $this->input->post('id');
 
@@ -379,17 +299,6 @@ class Evaluate extends CI_Controller {
 	}
 
 	function addQuestion(){
-		if(!$this->session->userdata('logged_in')){
-			redirect('login');
-		}
-		if($this->session->userdata('usertype') != 5){
-			$this->load->view('403');
-			// Force the CI engine to render the content generated until now    
-			$this->CI =& get_instance(); 
-			$this->CI->output->_display();
-			die();
-		}
-
 		$category = $this->input->post('category');
 		$question = $this->input->post('question');
 		$status = $this->input->post('status');

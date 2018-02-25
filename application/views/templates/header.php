@@ -7,7 +7,8 @@ switch ($this->session->userdata('usertype')) {
 	case '1': $usertype = 'Student'; break;
 	case '2':	$usertype = 'Faculty'; break;
 	case '3':	$usertype = 'Dean'; break;
-	case '5':	$usertype = 'Administrator'; break;	
+	case '5':	$usertype = 'Administrator'; break;
+	case '6':	$usertype = 'FEPEDO'; break;	
 	default: $usertype = 'Not yet assigned'; break;
 	}
 ?>
@@ -45,6 +46,7 @@ switch ($this->session->userdata('usertype')) {
 	<link href="<?= base_url() ?>assets/css/plugins/iCheck/custom.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/plugins/switchery/switchery.css" rel="stylesheet">
+	<link href="<?= base_url() ?>assets/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
 	<!-- Custom and plugin css -->
 	<link href="<?= base_url() ?>assets/css/animate.css" rel="stylesheet">
@@ -60,6 +62,7 @@ switch ($this->session->userdata('usertype')) {
   <script src="<?= base_url() ?>assets/js/plugins/sweetalert/sweetalert.min.js"></script>
   <script src="<?= base_url() ?>assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
   <script src="<?= base_url() ?>assets/js/plugins/switchery/switchery.js"></script>
+  <script src="<?= base_url() ?>assets/js/plugins/dataTables/datatables.min.js"></script>
 
 	<!-- Custom and plugin javascript -->
 	<script src="<?= base_url() ?>assets/js/inspinia.js"></script>
@@ -98,7 +101,8 @@ switch ($this->session->userdata('usertype')) {
 					<li>
 						<a href="<?= base_url()?>viewgrade"><i class="fa fa-book"></i> <span class="nav-label">View Grades</span></a>
 					</li>
-					<?php } elseif($this->session->userdata('usertype')==2){ $sem = $this->course_model->getSemForFaculty(); ?>
+					<?php } elseif($this->session->userdata('usertype')==2){ 
+						$sem = $this->course_model->getSemForFaculty(); ?>
 					<li>
 	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Course Masterlist</span><span class="fa arrow"></span></a>
 	          <ul class="nav nav-second-level collapse">
@@ -112,6 +116,28 @@ switch ($this->session->userdata('usertype')) {
 	          	} ?>
 	          </ul>
           </li>
+          <!-- <li>
+            <a href="#"><i class="fa fa-file-text-o"></i> <span class="nav-label">Evaluation Results</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+            	<?php if($sem){
+            		foreach ($sem as $key => $value) {
+            			$sy = $this->course_model->getSemById($value['sem_id']);
+            	?>
+            	<li>
+                <a href="#" id="damian"><?= $sy['name'] ?><span class="fa arrow"></span></a>
+                <ul class="nav nav-third-level">
+                  <li>
+                    <a href="<?= base_url().'evaluation/evalRes/'.$sy['id'] ?>">Result</a>
+                  </li>
+                  <li>
+                    <a href="#">Comments</a>
+                  </li>
+                </ul>
+              </li>            	
+            	<?php	}
+            	} ?>              
+            </ul>
+          </li> -->
 					<?php } elseif($this->session->userdata('usertype')==3){ ?>
 					<li>
 						<a href="<?= base_url()?>assignfaculty"><i class="fa fa-book"></i> <span class="nav-label">Assign Faculty</span></a>
@@ -125,13 +151,6 @@ switch ($this->session->userdata('usertype')) {
 					</li>
 					<?php } elseif($this->session->userdata('usertype')==5){ ?>
           <li>
-	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Faculty Evaluation</span><span class="fa arrow"></span></a>
-	          <ul class="nav nav-second-level collapse">
-	          	<li><a href="<?= base_url()?>evaluation/schedule">Schedule</a></li>
-	            <li><a href="<?= base_url()?>evaluation/result">Result</a></li>
-	          </ul>
-          </li>
-          <li>
 	          <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Enrollment</span><span class="fa arrow"></span></a>
 	          <ul class="nav nav-second-level collapse">
 	          	<li><a href="<?= base_url()?>enroll/schedule">Schedule</a></li>
@@ -143,10 +162,18 @@ switch ($this->session->userdata('usertype')) {
 	          	<li><a href="<?= base_url()?>semester/enrolled">Students Enrolled</a></li>
 	          </ul>
           </li>
+          <?php } elseif($this->session->userdata('usertype')==6){ ?>
+          <li>
+	          <a href="#"><i class="fa fa-list-alt"></i> <span class="nav-label">Faculty Evaluation</span><span class="fa arrow"></span></a>
+	          <ul class="nav nav-second-level collapse">
+	          	<li><a href="<?= base_url()?>evaluation/schedule">Schedule</a></li>
+	            <li><a href="<?= base_url()?>evaluation/result">Result</a></li>
+	          </ul>
+          </li>
           <?php } ?>
           <li style="margin-top: 20px;"><a href="http://udmlibrary.x10host.com/Home.php"><i class="fa fa-institution"></i> <span class="nav-label">UDM Library</span></a></li>
           <li><a href="http://umis.x10host.com"><i class="fa fa-hospital-o"></i> <span class="nav-label">UDM Medical Information System</span></a></li>
-          <li><a href="<?= base_url()?>viewgrade"><i class="fa fa-users"></i> <span class="nav-label">OSA</span></a></li>
+          <li><a href="#"><i class="fa fa-users"></i> <span class="nav-label">OSA</span></a></li>
 				</ul>
 			</div>
 		</nav>

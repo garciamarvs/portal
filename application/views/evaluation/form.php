@@ -3,11 +3,16 @@
 	$toShow = array();
 	foreach ($status as $key => $value) {
 		if(strtotime($value['date']) > time() && time() > strtotime($value['start_date'])){
-			$courses = $this->evaluation_model->getFacCourses($value['faculty'], $value['sem_id']);
+			$sections = explode(',', $value['sections']);
 			$f_courses = array();
+			foreach ($sections as $section) {
+				$courses = $this->evaluation_model->getFacCourses($value['faculty'], $section, $value['sem_id']);
+			
 				foreach ($courses as $c) {
 					$f_courses[] = $c['id'];
 				}
+			}
+			
 			$studCourses = $this->evaluation_model->getStudCourses($value['sem_id']);
 			$studCourses = json_decode($studCourses['course']);
 			// print_r($f_courses); echo "<br>";

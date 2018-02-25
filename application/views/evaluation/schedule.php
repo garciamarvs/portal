@@ -130,7 +130,7 @@ function dES(id){
 		<div class="ibox-content">
 			<div class="row">
 				<div class="form-group"><label class="col-sm-2 control-label text-right">School Year/Semester*</label>
-	        <div class="col-sm-4 no-padding"><select class="form-control m-b" name="sem_id" required="">
+	        <div class="col-sm-4 no-padding"><select class="form-control m-b" name="sem_id" required="" id="sem">
 	        	<?php foreach ($sem as $s) { ?>
 	        	<option value="<?= $s['id'] ?>"><?= $s['name'] ?></option>
 	        	<?php } ?>
@@ -154,7 +154,16 @@ function dES(id){
 	    <div class="row">
 				<div class="form-group"><label class="col-sm-2 control-label text-right">Faculty*</label>
 	        <div class="col-sm-4 no-padding">
-	        	<select id="faculty" class="form-control m-b" name="faculty" id="faculty" required="">
+	        	<select id="faculty" class="form-control m-b" name="faculty" required="">
+						</select>
+	        </div>
+	      </div>
+	    </div>
+
+	    <div class="row">
+				<div class="form-group"><label class="col-sm-2 control-label text-right">Choose section(s):*</label>
+	        <div class="col-sm-4 no-padding">
+	        	<select id="sections" class="form-control m-b" name="sections[]" required="" multiple="">
 						</select>
 	        </div>
 	      </div>
@@ -191,9 +200,56 @@ function dES(id){
 		populateFaculty();
 		$('#college').on('change', function(){
 			populateFaculty();
-			//End onChange
+			populateSection();
 		});
+
+		$('#faculty').on('change', function(){
+			populateSection();
+		});
+
+		$('#sem').on('change', function(){
+			populateSection();
+		});
+
+		var last_valid_selection = null;
+
+		$('#sections').on('change', function(){
+			if ($(this).val().length > 3) {
+        $(this).val(last_valid_selection);
+      } else {
+        last_valid_selection = $(this).val();
+      }
+		});
+
 	});
+
+	function populateSection(){
+		var faculty = $('#faculty').val();
+		var sem = $('#sem').val();
+
+		if(faculty!=null){
+			$.ajax({
+				type:"POST",
+				url:base_url+"evaluation/getSectionByFac",
+				data:({
+					faculty: faculty,
+					sem: sem
+				}),
+				dataType:"json"
+			}).done(function(data){
+				if(data.status=="success"){
+					$('#sections').empty();
+					console.log(data.out);
+					if(data.out.length > 0){
+						for(var i=0;i<data.out.length;i++){
+							var content = '<option value="'+data.out[i].id+'">'+data.out[i].name+'</option>';
+							$('#sections').append(content);
+						}
+					}
+				}
+			});
+		}
+	}
 
 	function populateFaculty(){
 		var college = $('#college').val();
@@ -204,8 +260,8 @@ function dES(id){
 					type: 'getFaculty',
 					college: college
 				}),
-				dataType: "json",
-				success: function(data){
+				dataType: "json"
+			}).done(function(data){
 					if(data.status == 'success'){
 						$('#faculty option').remove();
 						if(data.faculty.length > 0){
@@ -213,9 +269,8 @@ function dES(id){
 							var content = '<option value="'+data.faculty[i].id+'">'+data.faculty[i].first_name+' '+data.faculty[i].middle_name+' '+data.faculty[i].last_name+'</option>';
 							$('#faculty').append(content);
 							}
-						}						
+						}
 					}
-				}
 			});
 	}
 </script>

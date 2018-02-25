@@ -27,7 +27,7 @@
 			<div class="ibox">
 				<div class="ibox-content">
 					<h3 class="text-center">Direction</h3>
-					<p class="gray-bg p-xs">In our desire to improve the quality of instruction, we would like to find out waht you think of your professor/instructor through evaluation tools or rating scale. You are requested to check the number oppsotire the item that best reflect the extent to which professor/instructor performance or practice each of the behavior items listed below. Please give your HONEST answers. This is striclty <b>confidential</b>. Thank you very much.</p>
+					<p class="gray-bg p-xs">In our desire to improve the quality of instruction, we would like to find out waht you think of your professor/instructor through evaluation tools or rating scale. You are requested to check the number opposite the item that best reflect the extent to which professor/instructor performance or practice each of the behavior items listed below. Please give your HONEST answers. This is striclty <b>confidential</b>. Thank you very much.</p>
 					<table class="table table-bordered">
 				    <thead>
 				    <tr>

@@ -354,9 +354,7 @@ class Evaluate_model extends CI_Model {
 	}
 
 	function setRating($num){
-		$a = $num * 100;
-		$a = floor($a);
-		$a =  (float) ($a / 100);
+		$a = round($num, 2, PHP_ROUND_HALF_UP);
 		return $a;
 	}
 }

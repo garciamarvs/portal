@@ -41,9 +41,12 @@ class Assignfaculty extends CI_Controller {
 		$course = $this->input->post('id');
 		$faculty = $this->input->post('sel');
 		if($this->input->post('type')=='setFaculty'){
-			$this->assignfaculty_model->setFaculty($course, $faculty);
-
-			echo json_encode(array('status' => 'success'));
+			if($faculty==''||$this->assignfaculty_model->checkLoad($course, $faculty)){
+				$this->assignfaculty_model->setFaculty($course, $faculty);
+				echo json_encode(array('status' => 'success'));
+			} else {
+				echo json_encode(array('status' => 'failed'));
+			}
 		}
 	}
 }

@@ -3,11 +3,16 @@
 	$toShow = array();
 	foreach ($status as $key => $value) {
 		if(strtotime($value['date']) > time() && time() > strtotime($value['start_date'])){
-			$courses = $this->evaluation_model->getFacCourses($value['faculty'], $value['sem_id']);
+			$sections = explode(',', $value['sections']);
 			$f_courses = array();
+			foreach ($sections as $section) {
+				$courses = $this->evaluation_model->getFacCourses($value['faculty'], $section, $value['sem_id']);
+			
 				foreach ($courses as $c) {
 					$f_courses[] = $c['id'];
 				}
+			}
+			
 			$studCourses = $this->evaluation_model->getStudCourses($value['sem_id']);
 			$studCourses = json_decode($studCourses['course']);
 			// print_r($f_courses); echo "<br>";
@@ -38,7 +43,7 @@
 			<div class="ibox">
 				<div class="ibox-content">
 					<h3 class="text-center">Direction</h3>
-					<p class="gray-bg p-xs">In our desire to improve the quality of instruction, we would like to find out waht you think of your professor/instructor through evaluation tools or rating scale. You are requested to check the number oppsotire the item that best reflect the extent to which professor/instructor performance or practice each of the behavior items listed below. Please give your HONEST answers. This is striclty <b>confidential</b>. Thank you very much.</p>
+					<p class="gray-bg p-xs">In our desire to improve the quality of instruction, we would like to find out waht you think of your professor/instructor through evaluation tools or rating scale. You are requested to check the number opposite the item that best reflect the extent to which professor/instructor performance or practice each of the behavior items listed below. Please give your HONEST answers. This is striclty <b>confidential</b>. Thank you very much.</p>
 					<table class="table table-bordered">
 				    <thead>
 				    <tr>

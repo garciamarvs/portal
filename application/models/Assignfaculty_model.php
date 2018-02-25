@@ -10,13 +10,14 @@ class Assignfaculty_model extends CI_Model {
 	public function getSem()
 	{
 		$this->db->order_by('id', 'DESC');
-		$this->db->limit(5);
+		$this->db->limit(7);
 		$query = $this->db->get('semester');
 		return $query->result_array();
 	}
 
 	public function getSection($course)
-	{
+	{	
+		$this->db->order_by('name', 'ASC');
 		$this->db->like('name', $course, 'after');
 		$query = $this->db->get('ref_section');
 
@@ -86,5 +87,18 @@ class Assignfaculty_model extends CI_Model {
 
 		$this->db->where('id', $course);
 		$this->db->update('course', $data);
+	}
+
+	function checkLoad($course, $faculty)
+	{
+		$c = $this->evaluate_model->getCourseById($course);
+
+		$query = $this->db->get_where('course', array('instructor' => $faculty, 'sem_id' => $c['sem_id']));
+
+		if($query->num_rows()<5){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
