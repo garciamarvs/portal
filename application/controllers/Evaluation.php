@@ -381,65 +381,68 @@ class Evaluation extends CI_Controller {
 			//STUDENT
 			$status = $this->evaluation_model->getEvalSection($faculty, $sem_id);
 			$data['students'] = array();
-			$allSections = explode(',', $status['sections']);
-			foreach ($allSections as $allSec) {
-				//GET FACULTY LIST OF SUBJECT
-				$fac_courses = $this->evaluation_model->getFacCourses($faculty, $allSec, $sem_id);
-				//LOOP THROUGH SUBJECT AND SELECT STUDENTS
-				foreach ($fac_courses as $key => $value) {					
-					$stud = $this->evaluation_model->getStudByCourse($value['id']);
-					if($stud){
-						$totalStud = count($stud);
-						$s_IA = $s_IB = $s_IC = $s_ID = $s_II = 0;
-						foreach ($stud as $key => $value) {
-							// echo $value['result'].'<br>';
+			foreach ($status as $stat) {
+				$allSections = explode(',', $stat['sections']);
+				foreach ($allSections as $allSec) {
+					//GET FACULTY LIST OF SUBJECT
+					$fac_courses = $this->evaluation_model->getFacCourses($faculty, $allSec, $sem_id);
+					//LOOP THROUGH SUBJECT AND SELECT STUDENTS
+					foreach ($fac_courses as $key => $value) {					
+						$stud = $this->evaluation_model->getStudByCourse($value['id']);
+						if($stud){
+							$totalStud = count($stud);
+							$s_IA = $s_IB = $s_IC = $s_ID = $s_II = 0;
+							foreach ($stud as $key => $value) {
+								// echo $value['result'].'<br>';
 
-							$result = json_decode($value['result']);
+								$result = json_decode($value['result']);
 
-							$t_IA = $t_IB = $t_IC = $t_ID = $t_II = 0;
-							foreach ((array) $result as $r) {
-								// echo $r->ID.'<br>';
-								if(substr($r->ID, 0, 2)=='IA'){
-									$t_IA += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='IB'){
-									$t_IB += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='IC'){
-									$t_IC += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='ID'){
-									$t_ID += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='II'){
-									$t_II += $r->Value;
+								$t_IA = $t_IB = $t_IC = $t_ID = $t_II = 0;
+								foreach ((array) $result as $r) {
+									// echo $r->ID.'<br>';
+									if(substr($r->ID, 0, 2)=='IA'){
+										$t_IA += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='IB'){
+										$t_IB += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='IC'){
+										$t_IC += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='ID'){
+										$t_ID += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='II'){
+										$t_II += $r->Value;
+									}
 								}
+
+								//AVERAGE OF AREAS
+								$ave_IA = $t_IA/7;
+								$ave_IB = $t_IB/9;
+								$ave_IC = $t_IC/10;
+								$ave_ID = $t_ID/3;
+								$ave_II = $t_II/8;
+								// echo $ave_IA.' '.$ave_IB.' '.$ave_IC.' '.$ave_ID.' '.$ave_II.'<br>';
+
+								//ADD TO SECTION's RESULT
+								$s_IA += $ave_IA;
+								$s_IB += $ave_IB;
+								$s_IC += $ave_IC;
+								$s_ID += $ave_ID;
+								$s_II += $ave_II;
 							}
+							
+							$s_IA = $s_IA/$totalStud;
+							$s_IB = $s_IB/$totalStud;
+							$s_IC = $s_IC/$totalStud;
+							$s_ID = $s_ID/$totalStud;
+							$s_II = $s_II/$totalStud;
 
-							//AVERAGE OF AREAS
-							$ave_IA = $t_IA/7;
-							$ave_IB = $t_IB/9;
-							$ave_IC = $t_IC/10;
-							$ave_ID = $t_ID/3;
-							$ave_II = $t_II/8;
-							// echo $ave_IA.' '.$ave_IB.' '.$ave_IC.' '.$ave_ID.' '.$ave_II.'<br>';
-
-							//ADD TO SECTION's RESULT
-							$s_IA += $ave_IA;
-							$s_IB += $ave_IB;
-							$s_IC += $ave_IC;
-							$s_ID += $ave_ID;
-							$s_II += $ave_II;
+							// echo $s_IA.' '.$s_IB.' '.$s_IC.' '.$s_ID.' '.$s_II.'<br>';
+							$section_name = $this->evaluate_model->getSectionById($allSec);
+							$data['students'][] = array('section'=> $section_name['name'], 'a' => $s_IA, 'b' => $s_IB, 'c' => $s_IC, 'd' => $s_ID, 'ii' => $s_II);
 						}
-						
-						$s_IA = $s_IA/$totalStud;
-						$s_IB = $s_IB/$totalStud;
-						$s_IC = $s_IC/$totalStud;
-						$s_ID = $s_ID/$totalStud;
-						$s_II = $s_II/$totalStud;
-
-						// echo $s_IA.' '.$s_IB.' '.$s_IC.' '.$s_ID.' '.$s_II.'<br>';
-						$section_name = $this->evaluate_model->getSectionById($allSec);
-						$data['students'][] = array('section'=> $section_name['name'], 'a' => $s_IA, 'b' => $s_IB, 'c' => $s_IC, 'd' => $s_ID, 'ii' => $s_II);
+						// echo "<br>";					
 					}
-					// echo "<br>";					
-				}
+			}
+			
 			}
 
 			$data['f'] = $this->evaluate_model->getUserById($faculty);
@@ -575,72 +578,75 @@ class Evaluation extends CI_Controller {
 			$status = $this->evaluation_model->getEvalSection($faculty, $sem_id);
 			$data['students'] = array();
 			$data['stud_comments'] = array();
-			$allSections = explode(',', $status['sections']);
-			foreach ($allSections as $allSec) {
-				$stud_count = 0;
-				//GET FACULTY LIST OF SUBJECT
-				$fac_courses = $this->evaluation_model->getFacCourses($faculty, $allSec, $sem_id);
-				//LOOP THROUGH SUBJECT AND SELECT STUDENTS
-				foreach ($fac_courses as $key => $value) {
-					$stud = $this->evaluation_model->getStudByCourse($value['id']);
-					if($stud){
-						$totalStud = count($stud);
-						$stud_count += $totalStud;
-						$s_IA = $s_IB = $s_IC = $s_ID = $s_II = 0;
-						foreach ($stud as $key => $value) {
-							// echo $value['result'].'<br>';
+			foreach ($status as $stat) {
+				$allSections = explode(',', $stat['sections']);
+				foreach ($allSections as $allSec) {
+					$stud_count = 0;
+					//GET FACULTY LIST OF SUBJECT
+					$fac_courses = $this->evaluation_model->getFacCourses($faculty, $allSec, $sem_id);
+					//LOOP THROUGH SUBJECT AND SELECT STUDENTS
+					foreach ($fac_courses as $key => $value) {
+						$stud = $this->evaluation_model->getStudByCourse($value['id']);
+						if($stud){
+							$totalStud = count($stud);
+							$stud_count += $totalStud;
+							$s_IA = $s_IB = $s_IC = $s_ID = $s_II = 0;
+							foreach ($stud as $key => $value) {
+								// echo $value['result'].'<br>';
 
-							$result = json_decode($value['result']);
+								$result = json_decode($value['result']);
 
-							$t_IA = $t_IB = $t_IC = $t_ID = $t_II = 0;
-							foreach ((array) $result as $r) {
-								// echo $r->ID.'<br>';
-								if(substr($r->ID, 0, 2)=='IA'){
-									$t_IA += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='IB'){
-									$t_IB += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='IC'){
-									$t_IC += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='ID'){
-									$t_ID += $r->Value;
-								} else if(substr($r->ID, 0, 2)=='II'){
-									$t_II += $r->Value;
+								$t_IA = $t_IB = $t_IC = $t_ID = $t_II = 0;
+								foreach ((array) $result as $r) {
+									// echo $r->ID.'<br>';
+									if(substr($r->ID, 0, 2)=='IA'){
+										$t_IA += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='IB'){
+										$t_IB += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='IC'){
+										$t_IC += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='ID'){
+										$t_ID += $r->Value;
+									} else if(substr($r->ID, 0, 2)=='II'){
+										$t_II += $r->Value;
+									}
 								}
+
+								//AVERAGE OF AREAS
+								$ave_IA = $t_IA/7;
+								$ave_IB = $t_IB/9;
+								$ave_IC = $t_IC/10;
+								$ave_ID = $t_ID/3;
+								$ave_II = $t_II/8;
+								// echo $ave_IA.' '.$ave_IB.' '.$ave_IC.' '.$ave_ID.' '.$ave_II.'<br>';
+
+								//ADD TO SECTION's RESULT
+								$s_IA += $ave_IA;
+								$s_IB += $ave_IB;
+								$s_IC += $ave_IC;
+								$s_ID += $ave_ID;
+								$s_II += $ave_II;
+
+								if($value['comment']!="''"){
+									$data['stud_comments'][] = $value['comment'];
+								}							
 							}
+							
+							$s_IA = $s_IA/$totalStud;
+							$s_IB = $s_IB/$totalStud;
+							$s_IC = $s_IC/$totalStud;
+							$s_ID = $s_ID/$totalStud;
+							$s_II = $s_II/$totalStud;
 
-							//AVERAGE OF AREAS
-							$ave_IA = $t_IA/7;
-							$ave_IB = $t_IB/9;
-							$ave_IC = $t_IC/10;
-							$ave_ID = $t_ID/3;
-							$ave_II = $t_II/8;
-							// echo $ave_IA.' '.$ave_IB.' '.$ave_IC.' '.$ave_ID.' '.$ave_II.'<br>';
-
-							//ADD TO SECTION's RESULT
-							$s_IA += $ave_IA;
-							$s_IB += $ave_IB;
-							$s_IC += $ave_IC;
-							$s_ID += $ave_ID;
-							$s_II += $ave_II;
-
-							if($value['comment']!="''"){
-								$data['stud_comments'][] = $value['comment'];
-							}							
+							// echo $s_IA.' '.$s_IB.' '.$s_IC.' '.$s_ID.' '.$s_II.'<br>';
+							$section_name = $this->evaluate_model->getSectionById($allSec);
+							$data['students'][] = array('section' => $section_name['name'], 'a' => $s_IA, 'b' => $s_IB, 'c' => $s_IC, 'd' => $s_ID, 'ii' => $s_II, 'count' => $stud_count);
 						}
-						
-						$s_IA = $s_IA/$totalStud;
-						$s_IB = $s_IB/$totalStud;
-						$s_IC = $s_IC/$totalStud;
-						$s_ID = $s_ID/$totalStud;
-						$s_II = $s_II/$totalStud;
-
-						// echo $s_IA.' '.$s_IB.' '.$s_IC.' '.$s_ID.' '.$s_II.'<br>';
-						$section_name = $this->evaluate_model->getSectionById($allSec);
-						$data['students'][] = array('section' => $section_name['name'], 'a' => $s_IA, 'b' => $s_IB, 'c' => $s_IC, 'd' => $s_ID, 'ii' => $s_II, 'count' => $stud_count);
+						// echo "<br>";
 					}
-					// echo "<br>";					
 				}
 			}
+			
 
 			// if(count($students)>0){
 			// 	$data['students'] = array();

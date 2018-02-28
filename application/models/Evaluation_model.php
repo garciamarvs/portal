@@ -81,7 +81,7 @@ class Evaluation_model extends CI_Model {
 	{
 		$query = $this->db->get_where('status', array('name' => 'faculty_eval', 'active' => 1, 'faculty' => $faculty, 'sem_id' => $sem));
 
-		return $query->row_array();
+		return $query->result_array();
 	}
 
 	//AJAXs

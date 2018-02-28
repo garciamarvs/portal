@@ -3,7 +3,6 @@
 		height: 100%;
 	}
 </style>
-
 <h2 class="text-center bg-primary p-xs b-r-md">Faculty Evaluation Results</h2>
 <div class="panel panel-info">
 	<div class="panel-body p-xs">
@@ -45,7 +44,7 @@
 	</div>
 </div>
 
-<?php if(count($students)>0&&isset($dean)){ ?>
+<?php if(isset($students)&&isset($dean)){ ?>
 	<a href="<?= base_url().'evaluation/report/'.$f['id'].'/'.$sy ?>"><button class="btn btn-primary"><i class="fa fa-file-text"></i> Print Report</button></a>
 <?php } ?>
 
@@ -53,7 +52,7 @@
 	<div class="ibox">
 		<div class="ibox-content">
 			<table class="table table-striped">
-				<?php if(count($students)>0){ ?>
+				<?php if(isset($students)){ ?>
 			  <thead>
 			  <tr class="gray-bg">
 					<th colspan="8">STUDENTS</th>
@@ -234,7 +233,7 @@
 					<?php } ?>
 				</tr>
 				<?php }	?>
-				<?php if(count($students)>0){ ?>
+				<?php if(isset($students)){ ?>
 				<tr>
 					<td></td>
 				</tr>				
@@ -246,8 +245,8 @@
 					<td></td>					
 					<td class="text-right" colspan="2"><b>OVERALL</b></td>
 					<td><b>
-						<?php if(count($students)>0&&isset($assoc)&&isset($dean)){ echo $this->evaluate_model->setRating(((($ave_I+$ave_II)/2)*0.5)+((($assoc['i']+$assoc['ii']+$assoc['iii']+$assoc['iv'])/4)*0.2)+((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*0.3));
-					} else if(count($students)>0&&isset($dean)){
+						<?php if(isset($students)&&isset($assoc)&&isset($dean)){ echo $this->evaluate_model->setRating(((($ave_I+$ave_II)/2)*0.5)+((($assoc['i']+$assoc['ii']+$assoc['iii']+$assoc['iv'])/4)*0.2)+((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*0.3));
+					} else if(isset($students)&&isset($dean)){
 						echo $this->evaluate_model->setRating(((($ave_I+$ave_II)/2)*0.5)+((($dean['i']+$dean['ii']+$dean['iii']+$dean['iv'])/4)*0.5));
 					} ?></b></td>
 				</tr>

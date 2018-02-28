@@ -37,6 +37,7 @@
         <tr>
           <th class="col-sm-3">School Year/Semester</th>
           <th class="col-sm-2">Faculty</th>
+          <th class="col-sm-2">Sections</th>
           <th class="col-sm-1">Start Date</th>
           <th class="col-sm-1">End Date</th>
           <th class="col-sm-1" colspan="2">Status</th>
@@ -47,6 +48,13 @@
         	<tr>
         		<td><?php $a = $this->evaluate_model->getSemById($s['sem_id']); echo $a['name']; ?></td>
         		<td><?php $b = $this->evaluate_model->getUserById($s['faculty']); echo $b['first_name'].' '.$b['middle_name'].' '.$b['last_name']; ?></td>
+        		<td><?php $sections = explode(',', $s['sections']);
+        		$eval_section = array();
+        		foreach ($sections as $key => $value) {
+        			$a = $this->evaluate_model->getSectionById($value);
+        			$eval_section[] = $a['name'];
+        		} echo implode(", ",$eval_section);
+        		 ?></td>
         		<td><?= substr($s['start_date'], 0, 10); ?></td>
         		<td><?= substr($s['date'], 0, 10); ?></td>
         		<td id="text<?= $s['id'] ?>"><?php if($s['active']=='1'){
@@ -200,7 +208,7 @@ function dES(id){
 		populateFaculty();
 		$('#college').on('change', function(){
 			populateFaculty();
-			populateSection();
+			setTimeout(function(){ populateSection(); }, 1000);			
 		});
 
 		$('#faculty').on('change', function(){
