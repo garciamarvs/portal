@@ -20,7 +20,7 @@ class Assignfaculty extends CI_Controller {
 		$data['courses'] = $this->assignfaculty_model->getCourses();
 
 		$this->load->view('templates/header');
-		$this->load->view('assignfaculty/index', $data);
+		$this->load->view('Assignfaculty/index', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -41,12 +41,9 @@ class Assignfaculty extends CI_Controller {
 		$course = $this->input->post('id');
 		$faculty = $this->input->post('sel');
 		if($this->input->post('type')=='setFaculty'){
-			if($faculty==''||$this->assignfaculty_model->checkLoad($course, $faculty)){
-				$this->assignfaculty_model->setFaculty($course, $faculty);
-				echo json_encode(array('status' => 'success'));
-			} else {
-				echo json_encode(array('status' => 'failed'));
-			}
+			$this->assignfaculty_model->setFaculty($course, $faculty);
+
+			echo json_encode(array('status' => 'success'));
 		}
 	}
 }

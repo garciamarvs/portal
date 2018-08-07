@@ -30,7 +30,7 @@
 					<?php foreach ($students as $key => $value) { ?>
 					<tr>
 						<td class="text-center"><?= ($key+1) ?></td>
-						<td><?php if($value['last_name']==''){echo $value['first_name'].' '.$value['middle_name'];}else{ echo $value['last_name'].', '.$value['first_name'].' '.$value['middle_name'];} ?></td>
+						<td><?= $value['last_name'].', '.$value['first_name'].' '.$value['middle_name'] ?></td>
 						<td><?= $value['user_ID'] ?></td>
 					</tr>
 					<?php } ?>

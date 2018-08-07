@@ -52,39 +52,11 @@ class Evaluate_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function addEvalRes($course_id, $result)
+	public function addEvalRes($course_id,$result)
 	{
-		$a = $this->evaluate_model->getCourseById($course_id);
 		$data = array(
 						'student_id' => $this->session->userdata('user_id'),
-						'section_id' => $a['section_id'],
 						'course_id'  => $course_id,
-						'result'		 => $result,
-						'comment'		 => $this->db->escape($this->input->post('comment'))
-		);
-
-		$this->db->insert('eval_log', $data);
-	}
-
-	public function addEvalRes2($faculty, $sem_id, $result)
-	{
-		$data = array(
-						'dean_id' 	 => $this->session->userdata('user_id'),
-						'faculty' 	 => $faculty,						
-						'sem_id'		 => $sem_id,
-						'result'		 => $result,
-						'comment'		 => $this->db->escape($this->input->post('comment'))
-		);
-
-		$this->db->insert('eval_log', $data);
-	}
-
-	public function addEvalRes3($faculty, $sem_id, $result)
-	{
-		$data = array(
-						'assoc_id' 	 => $this->session->userdata('user_id'),
-						'faculty' 	 => $faculty,						
-						'sem_id'		 => $sem_id,
 						'result'		 => $result,
 						'comment'		 => $this->db->escape($this->input->post('comment'))
 		);
@@ -102,28 +74,6 @@ class Evaluate_model extends CI_Model {
 			return true;
 		}
 
-	}
-
-	public function getTaposNa2($faculty, $sem_id)
-	{
-		$result = $this->db->get_where('eval_log', array('dean_id' => $this->session->userdata('user_id'), 'faculty' => $faculty, 'sem_id' => $sem_id));
-
-		if($result->num_rows()==0){
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public function getTaposNa3($faculty, $sem_id)
-	{
-		$result = $this->db->get_where('eval_log', array('assoc_id' => $this->session->userdata('user_id'), 'faculty' => $faculty, 'sem_id' => $sem_id));
-
-		if($result->num_rows()==0){
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	public function getSem()
@@ -354,7 +304,9 @@ class Evaluate_model extends CI_Model {
 	}
 
 	function setRating($num){
-		$a = round($num, 2, PHP_ROUND_HALF_UP);
+		$a = $num * 100;
+		$a = floor($a);
+		$a =  (float) ($a / 100);
 		return $a;
 	}
 }

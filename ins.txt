@@ -1,0 +1,1 @@
+INSERT INTO `course_log` (`id`, `sem_id`, `course`, `student`, `section_id`) VALUES (NULL, '8', '[{\"course\":\"17\",\"grade\":\"79\"},{\"course\":\"18\",\"grade\":\"92\"},{\"course\":\"19\",\"grade\":\"93\"},{\"course\":\"20\",\"grade\":\"87\"},{\"course\":\"21\",\"grade\":\"92\"},{\"course\":\"22\",\"grade\":\"90\"},{\"course\":\"23\",\"grade\":\"98\"}]', '1', '7')

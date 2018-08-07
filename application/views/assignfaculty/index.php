@@ -30,9 +30,6 @@
 		background-color: #1ab394 !important;
     color: #ffffff !important;
 	}
-  .tabs-container .tabs-left .panel-body {
-    width: auto !important;
-  }
 
   .custom {
     background-color: #FFFFFF;
@@ -47,30 +44,28 @@
 </style>
 
 <div class="row">
-  <div class="col-md-12">
-    <div class="tabs-container">
-      <div class="tabs-left">
-        <ul class="nav nav-tabs">
-          <?php $ctr=1; foreach ($courses as $key => $value) {
-          if($ctr!=1){
-            echo '<li class=""><a data-toggle="tab" href="#tab-'.$ctr.'" aria-expanded="false">'.$value['name'].'</a></li>'; $ctr++;
-          } else {
-            echo '<li class="active"><a data-toggle="tab" href="#tab-'.$ctr.'" aria-expanded="true">'.$value['name'].'</a></li>'; $ctr++;
-          } ?>
-          <?php } ?>
-        </ul>
-        <div class="tab-content ">
-          <?php $ctr=1; foreach ($courses as $key => $value) {
-          if($ctr!=1){
-            echo '<div id="tab-'.$ctr.'" class="tab-pane"><div id="foo-'.$ctr.'" class="panel-body"></div></div>'; $ctr++;
-          } else {
-            echo '<div id="tab-'.$ctr.'" class="tab-pane active"><div id="foo-'.$ctr.'" class="panel-body"></div></div>'; $ctr++;
-          } ?>
-          <?php } ?>
-        </div>
-      </div>
-    </div>
-  </div>	
+	<div class="tabs-container">
+		<div class="tabs-left">
+			<ul class="nav nav-tabs">
+				<?php $ctr=1; foreach ($courses as $key => $value) {
+				if($ctr!=1){
+					echo '<li class=""><a data-toggle="tab" href="#tab-'.$ctr.'" aria-expanded="false">'.$value['name'].'</a></li>'; $ctr++;
+				} else {
+					echo '<li class="active"><a data-toggle="tab" href="#tab-'.$ctr.'" aria-expanded="true">'.$value['name'].'</a></li>'; $ctr++;
+				} ?>
+				<?php } ?>
+			</ul>
+			<div class="tab-content ">
+				<?php $ctr=1; foreach ($courses as $key => $value) {
+				if($ctr!=1){
+					echo '<div id="tab-'.$ctr.'" class="tab-pane"><div id="foo-'.$ctr.'" class="panel-body"></div></div>'; $ctr++;
+				} else {
+					echo '<div id="tab-'.$ctr.'" class="tab-pane active"><div id="foo-'.$ctr.'" class="panel-body"></div></div>'; $ctr++;
+				} ?>
+				<?php } ?>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -80,18 +75,6 @@
       populatePanel();
     });
   });
-
-  $('option').click(function(event){
-    event.stopPropagation();
-    //rest of code
-  })
-
-  var lastSel;
-
-  function setLastSel(sel){
-    lastSel = sel.selectedIndex;
-    // console.log('SET '+lastSel);
-  }
 
   function setFaculty(sel, i){
   	$.ajax({
@@ -106,16 +89,7 @@
   	}).done(function(data){
   		if(data.status=='success'){
   			// alert('success');
-  		} else if(data.status=='failed'){
-        sel.selectedIndex = lastSel;
-        swal({
-          title: "Maximum Load Reached!",
-          type: "warning",
-          showConfirmButton: false,
-          allowOutsideClick: true
-        });
-        // console.log('AFTER '+lastSel);
-      }
+  		}
   	});
   }
 
@@ -138,7 +112,7 @@
     		dataType: 'json',
     	}).done(function(data){
     			if(data.status="success"){
-    				// console.log(data.out);
+    				console.log(data.out);
     				$('#foo-'+(index+1)).empty();
             if(data.out==false){
               var content = '<div class="middle-box text-center animated fadeInDown"><h3 class="font-bold">No Data Found.</h3></div>';
@@ -153,15 +127,15 @@
 
                   } else {
                     if(a==0){
-                      content += '<div class="row"><div class="panel panel-primary"><div class="panel-heading">'+y.section_name+'</div><div class="panel-body" style="margin-left:0;"><table class="table"><thead><tr><th class="col-md-1 text-center">Subject Code</th><th class="col-md-5">Subject Title</th><th class="col-md-4">Faculty</th><th class="col-md-3">Day | Time</th class="col-md-1 text-center"><th>Room</th></tr></thead><tbody>';
+                      content += '<div class="row"><div class="panel panel-primary"><div class="panel-heading">'+y.section_name+'</div><div class="panel-body" style="margin-left:0;"><table class="table"><thead><tr><th class="col-md-1 text-center">Subject Code</th><th class="col-md-4">Subject Title</th><th class="col-md-3">Faculty</th><th class="col-md-1 text-center">Section</th></tr></thead><tbody>';
                     }
-                    content += '<tr><td class="text-center">'+b.code+'</td><td>'+b.title+'</td><td><select class="faculty form-control" onchange="setFaculty(this, '+b.id+');" onfocus="setLastSel(this);"><option></option>';
+                    content += '<tr><td class="text-center">'+b.code+'</td><td>'+b.title+'</td><td><select class="form-control" onchange="setFaculty(this, '+b.id+');">';
 
                     <?php foreach ($faculties as $key => $value) {
                       echo 'if(b.instructor=="'.$value['id'].'"){content += \'<option value="'.$value['id'].'" selected>'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\'} else {content += \'<option value="'.$value['id'].'">'.$value['first_name'].' '.$value['middle_name'].' '.$value['last_name'].'</option>\'}';
                     } ?>
 
-                    content += '</select></td><td>'+b.schedule+'</td><td class="text-center">'+b.room+'</td></tr>';
+                    content += '</select></td><td class="text-center">'+b.section+'</td></tr>';
                   }
                 });
                 if(content!=''){
